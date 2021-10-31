@@ -3,132 +3,40 @@ server<-function(input, output) {
 # Situazione Generale----
   
 ## Tabella----
-  output$tabella <- renderDataTable(
-    datatable((covid %>% 
-                filter(tipoconf == "Gratuito")))
-    
-  )
-  
-## Plot----
-  output$serie <- renderPlot({  
+  output$tabella <- renderDataTable({   
     
     if(input$Regione == "Dati Complessivi") {
+    
+    datatable((covid %>% 
+                filter(tipoconf == "Gratuito" & anno == 2021)))
+    } else
+    
+    if(input$Regione == "Lombardia"){
+      datatable((covid %>% 
+                   filter(tipoconf == "Gratuito" & anno == 2021 & Regione == "Lombardia")))
       
-      # covid %>% 
-      #   filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
-      #   mutate(anno = year(dtacc)) %>% 
-      #   filter(anno == 2021) %>% 
-      #   group_by(dtacc) %>% 
-      #   summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%  
-      #   filter(esami > 0) %>%
-      #   mutate(sett = rollmean(esami, k = 30, fill = NA) )%>%  
-      #   ggplot(aes(
-      #     x = dtacc, 
-      #     y = sett
-      #   ))+
-      #   geom_line(col = "blue", size = 1.5)+
-      #   geom_point(aes(x = dtacc, 
-      #                  y = esami), alpha = 1/5)+
-      #   geom_line(aes(x = dtacc, 
-      #                 y = esami), alpha = 1/5)+
-      #   
-      #   labs(
-      #     y = "Numero Tamponi Naso Faringei", 
-      #     x = "", 
-      #     title = "Andamento del numero di tamponi naso-faringei processati dai laboratori COVID dell'IZSLER nel 2021", 
-      #     subtitle = " I punti rappresentano il numero di tamponi giornalieri, la linea blu la media mobile mensile"
-      #   )+
-      #   theme_ipsum_rc(base_size = 10,  axis_title_size = 10, 
-      #                  plot_title_size = 10)+
-      #   theme(
-      #     axis.text.x=element_text(size = 10))
-      
+    } else
+    
+      if(input$Regione == "Emilia Romagna"){
+        datatable((covid %>% 
+                     filter(tipoconf == "Gratuito" & anno == 2021 & Regione == "Emilia Romagna")))
+      }
+    
+  })
+  
+## Plot----
+  output$serie <- renderPlotly({  
+    
+      if(input$Regione == "Dati Complessivi") {
       serie1()
-      
-    } else  
-      
+      } else  
       if(input$Regione == "Lombardia") {  
-        
-      # covid %>% 
-      #     filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
-      # mutate(anno = year(dtacc)) %>% 
-      #   filter(anno == 2021 & Regione == "Lombardia") %>% 
-      # group_by(dtacc) %>% 
-      # summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%  
-      # filter(esami > 0) %>%
-      # mutate(sett = rollmean(esami, k = 30, fill = NA) )%>%  
-      # ggplot(aes(
-      #   x = dtacc, 
-      #   y = sett
-      # ))+
-      # geom_line(col = "blue", size = 1.5)+
-      # # geom_col( aes(y = Tot), 
-      # #    alpha = 1/5)+
-      # 
-      # geom_point(aes(x = dtacc, 
-      #                y = esami), alpha = 1/5)+
-      # geom_line(aes(x = dtacc, 
-      #               y = esami), alpha = 1/5)+
-      # #geom_hline(yintercept = 2729) +
-      # 
-      # labs(
-      #   y = "Numero Tamponi Naso Faringei", 
-      #   x = "", 
-      #   title =  "Andamento del numero di tamponi naso-faringei processati dai laboratori COVID dell'IZSLER nel 2021", 
-      #   subtitle = " I punti rappresentano il numero di tamponi giornalieri, la linea blu la media mobile mensile"
-      # )+
-      #     theme_ipsum_rc(base_size = 10,  axis_title_size = 10, 
-      #                    plot_title_size = 10)+
-      #     theme(
-      #       axis.text.x=element_text(size = 10))
-      #   
-        
-        serie2(regione = "Lombardia")
-    
+      serie2(regione = "Lombardia")
       } else
-        
-        if(input$Regione == "Emilia Romagna")
+      if(input$Regione == "Emilia Romagna")
         {
-          
-        #   covid %>% 
-        #     filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
-        #     mutate(anno = year(dtacc)) %>% 
-        #     filter(anno == 2021 & Regione == "Emilia Romagna") %>% 
-        #     group_by(dtacc) %>% 
-        #     summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%  
-        #     filter(esami > 0) %>%
-        #     mutate(sett = rollmean(esami, k = 30, fill = NA) )%>%  
-        #     ggplot(aes(
-        #       x = dtacc, 
-        #       y = sett
-        #     ))+
-        #     geom_line(col = "blue", size = 1.5)+
-        #     # geom_col( aes(y = Tot), 
-        #     #    alpha = 1/5)+
-        #     
-        #     geom_point(aes(x = dtacc, 
-        #                    y = esami), alpha = 1/5)+
-        #     geom_line(aes(x = dtacc, 
-        #                   y = esami), alpha = 1/5)+
-        #     #geom_hline(yintercept = 2729) +
-        #     
-        #     labs(
-        #       y = "Numero Tamponi Naso Faringei", 
-        #       x = "", 
-        #       title =  "Andamento del numero di tamponi naso-faringei processati dai laboratori COVID dell'IZSLER nel 2021", 
-        #       subtitle = " I punti rappresentano il numero di tamponi giornalieri, la linea blu la media mobile mensile"
-        #     )+
-        #     theme_ipsum_rc(base_size = 10,  axis_title_size = 10, 
-        #                    plot_title_size = 10)+
-        #     theme(
-        #       axis.text.x=element_text(size = 10))
-        # }
-        # 
-        
         serie2(regione = "Emilia Romagna")
-    
-  }   
-    
+        }   
     })
   
       

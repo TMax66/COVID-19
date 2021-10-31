@@ -13,7 +13,7 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                                  selectInput("Regione", "Regione sede prelievo", 
                                          choices =  c("Dati Complessivi", "Lombardia", "Emilia Romagna"))), 
                           column(4, 
-                            plotOutput("serie")), 
+                            plotlyOutput("serie")), 
                           
                          column(6, 
                                 fluidRow (  

@@ -15,6 +15,7 @@ library(openxlsx)
 library(janitor)
 library(zoo)
 library(hrbrthemes)
+library(plotly)
 
 # conn <- DBI::dbConnect(odbc::odbc(), Driver = "SQL Server", Server = "dbprod02.izsler.it",Database = "IZSLER", Port = 1433)
 # 
@@ -71,6 +72,9 @@ library(hrbrthemes)
 
 # Dati
 covid <- readRDS(here("data", "processed", "covid.rds"))
+covid <- 
+  covid %>% 
+  mutate(anno = year(dtacc))
 
 # Funzioni
 ## Valuebox
@@ -102,7 +106,7 @@ valueBox <- function(value, subtitle, icon, color) {
 serie1 <- function(){  
   covid %>% 
     filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
-    mutate(anno = year(dtacc)) %>% 
+    #mutate(anno = year(dtacc)) %>% 
     filter(anno == 2021) %>% 
     
     
@@ -127,7 +131,7 @@ serie1 <- function(){
       subtitle = " I punti rappresentano il numero di tamponi giornalieri, la linea blu la media mobile mensile"
     )+
     theme_ipsum_rc(base_size = 10,  axis_title_size = 10, 
-                   plot_title_size = 10)+
+                   plot_title_size = 5)+
     theme(
       axis.text.x=element_text(size = 10))
 }
@@ -135,7 +139,7 @@ serie1 <- function(){
 serie2 <- function(regione){  
   covid %>% 
     filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
-    mutate(anno = year(dtacc)) %>% 
+    #mutate(anno = year(dtacc)) %>% 
     filter(anno == 2021 & Regione == regione) %>% 
     group_by(dtacc) %>% 
     summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%  
@@ -162,7 +166,7 @@ serie2 <- function(regione){
       subtitle = " I punti rappresentano il numero di tamponi giornalieri, la linea blu la media mobile mensile"
     )+
     theme_ipsum_rc(base_size = 10,  axis_title_size = 10, 
-                   plot_title_size = 10)+
+                   plot_title_size = 5)+
     theme(
       axis.text.x=element_text(size = 10))
   
