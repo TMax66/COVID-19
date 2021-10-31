@@ -15,6 +15,7 @@ server<-function(input, output) {
     if(input$Regione == "Dati Complessivi") {
       
       covid %>% 
+        filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
         mutate(anno = year(dtacc)) %>% 
         filter(anno == 2021) %>% 
         group_by(dtacc) %>% 
@@ -47,6 +48,7 @@ server<-function(input, output) {
       if(input$Regione == "Lombardia") {  
         
       covid %>% 
+          filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
       mutate(anno = year(dtacc)) %>% 
         filter(anno == 2021 & Regione == "Lombardia") %>% 
       group_by(dtacc) %>% 
@@ -85,6 +87,7 @@ server<-function(input, output) {
         {
           
           covid %>% 
+            filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
             mutate(anno = year(dtacc)) %>% 
             filter(anno == 2021 & Regione == "Emilia Romagna") %>% 
             group_by(dtacc) %>% 
