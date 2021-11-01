@@ -177,8 +177,6 @@ serie3 <- function(reparto){
     filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
     filter(Reparto== reparto) %>% 
     filter(anno == 2021) %>% 
-    
-    
     group_by(dtacc) %>% 
     summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%  
     filter(esami > 0) %>%
