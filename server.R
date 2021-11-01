@@ -44,7 +44,7 @@ server<-function(input, output) {
   
 ## Valuebox----
   
-## numero tamponi processati----
+### numero ----
   output$tottamp <- renderText({
     
     if(input$Regione == "Dati Complessivi") {
@@ -84,7 +84,7 @@ server<-function(input, output) {
     
   })
 
-## media tamponi processati----
+### media ----
   output$medg<- renderText({  
      
      if(input$Regione == "Dati Complessivi") {
@@ -125,7 +125,7 @@ server<-function(input, output) {
         }
    })
   
-## Varianti----
+###varianti----
    output$vart<- renderText({
      
      if(input$Regione == "Dati Complessivi"){
@@ -161,7 +161,7 @@ server<-function(input, output) {
      
    })
      
-## Sequenziamento
+###sequenziamento----
  
    
 output$seqt<- renderText({
@@ -206,7 +206,48 @@ output$seqt<- renderText({
    
   
 # Laboratori Covid----
+
+## Laboratorio Brescia----
+### Tabella----
+output$tabella2 <- renderDataTable({   
   
+  if(input$Regione == "Dati Complessivi") {
+    
+    datatable((covid %>% 
+                 filter(tipoconf == "Gratuito" & anno == 2021 & Reparto == "Reparto Tecnologie Biologiche Applicate")))
+  } else
+    
+    if(input$Regione == "Lombardia"){
+      datatable((covid %>% 
+                   filter(tipoconf == "Gratuito" & anno == 2021 & Regione == "Lombardia" & Reparto == "Reparto Tecnologie Biologiche Applicate")))
+      
+    } else
+      
+      if(input$Regione == "Emilia Romagna"){
+        datatable((covid %>% 
+                     filter(tipoconf == "Gratuito" & anno == 2021 & Regione == "Emilia Romagna"& Reparto == "Reparto Tecnologie Biologiche Applicate")))
+      }
+  
+})
+
+
+
+### Plot----
+output$serieBS<- renderPlotly({  
+    serie3(reparto = "Reparto Tecnologie Biologiche Applicate")
+})
+
+
+
+
+
+
+
+### ValueBox----
+##### numero----
+##### media----
+##### varianti----
+##### sequenziamento----
 }
   
   
