@@ -55,19 +55,19 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                  fluidRow(
                    br(), 
                    column(6, 
-                          plotlyOutput("serieBS"))#, 
-                   # 
-                   # column(6, 
-                   #        fluidRow (  
-                   #          valueBox(value = "tottamp",
-                   #                   subtitle = "N.Tamponi processati",
-                   #                   icon = "flask",
-                   #                   color = "green"), 
-                   #          valueBox(value = "medg",
-                   #                   subtitle = "Media giornaliera tamponi processati",
-                   #                   icon = "flask",
-                   #                   color = "green")
-                   #        ),
+                          plotlyOutput("serieBS")), 
+                    
+                   column(6, 
+                         fluidRow (  
+                           valueBox(value = "tottampBS",
+                                    subtitle = "N.Tamponi processati",
+                                     icon = "flask",
+                                     color = "green")),
+                             valueBox(value = "medgBS",
+                                      subtitle = "Media giornaliera tamponi processati",
+                                       icon = "flask",
+                                      color = "green")
+                           )#,
                    #        br(),br(),br(),br(),
                    #        fluidRow (  
                    #          valueBox(value = "vart",

@@ -237,15 +237,35 @@ output$serieBS<- renderPlotly({
     serie3(reparto = "Reparto Tecnologie Biologiche Applicate")
 })
 
-
-
-
-
-
-
 ### ValueBox----
+
+
 ##### numero----
+output$tottampBS <- renderText({
+  
+ 
+    
+    tot <-covid %>% 
+      mutate(anno = year(dtacc)) %>% 
+      filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & anno == 2021 & Reparto == "Reparto Tecnologie Biologiche Applicate") %>% 
+      summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) 
+    
+    tot$esami
+})
+
+
+
 ##### media----
+output$medgBS<- renderText({  
+    media <-  covid %>% 
+      mutate(anno = year(dtacc)) %>% 
+      filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & anno == 2021& Reparto == "Reparto Tecnologie Biologiche Applicate") %>% 
+      group_by(dtacc) %>% 
+      summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
+      summarise(media = mean(esami))
+    media$media
+})
+    
 ##### varianti----
 ##### sequenziamento----
 }
