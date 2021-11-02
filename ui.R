@@ -48,7 +48,7 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                 )
              ), 
 # LABORATORIO BRESCIA----
-    tabPanel("Laboratorio Covid-Brescia", 
+    tabPanel("Laboratorio Covid-Reparto Tecnologie Biologiche Applicate", 
              fluidPage(
                
                wellPanel(  
@@ -62,37 +62,164 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                            valueBox(value = "tottampBS",
                                     subtitle = "N.Tamponi processati",
                                      icon = "flask",
-                                     color = "green")),
+                                     color = "green"),
                              valueBox(value = "medgBS",
                                       subtitle = "Media giornaliera tamponi processati",
                                        icon = "flask",
                                       color = "green")
-                           )#,
-                   #        br(),br(),br(),br(),
-                   #        fluidRow (  
-                   #          valueBox(value = "vart",
-                   #                   subtitle = "Identificazione Varianti",
-                   #                   icon = "dna",
-                   #                   color = "lightblue"), 
-                   #          valueBox(value = "seqt",
-                   #                   subtitle = "Sequenziamento",
-                   #                   icon = "dna",
-                   #                   color = "lightblue")
-                   #        )
-                   )),
-                   
-                 #)
-              # ), 
+                           ),
+                            br(),br(),br(),br(),
+                           fluidRow (  
+                            valueBox(value = "varbs",
+                                     subtitle = "Identificazione Varianti",
+                                     icon = "dna",
+                                     color = "lightblue"),
+                            valueBox(value = "seqbs",
+                                     subtitle = "Sequenziamento",
+                                     icon = "dna",
+                                     color = "lightblue")
+                          )
+                   ))),
                
                fluidRow(
                  DTOutput("tabella2")
                )
              )
              ), 
-    tabPanel("Laboratorio Covid-Pavia"), 
-    tabPanel("Laboratorio Covid-Modena"), 
-    tabPanel("Analisi del Rischio ed Epidemiologia Genomica")
-     
+
+#LABORATORIO PAVIA----
+    tabPanel("Laboratorio Covid-Pavia",
+             fluidPage(
+                 
+                 wellPanel(  
+                     fluidRow(
+                         br(), 
+                         column(6, 
+                                plotlyOutput("seriePV")), 
+                         
+                         column(6, 
+                                fluidRow (  
+                                    valueBox(value = "tottampPV",
+                                             subtitle = "N.Tamponi processati",
+                                             icon = "flask",
+                                             color = "green"),
+                                    valueBox(value = "medgPV",
+                                             subtitle = "Media giornaliera tamponi processati",
+                                             icon = "flask",
+                                             color = "green")
+                                ),
+                                br(),br(),br(),br(),
+                                fluidRow (  
+                                    valueBox(value = "varPV",
+                                             subtitle = "Identificazione Varianti",
+                                             icon = "dna",
+                                             color = "lightblue"),
+                                    valueBox(value = "seqPV",
+                                             subtitle = "Sequenziamento",
+                                             icon = "dna",
+                                             color = "lightblue")
+                                )
+                         ))),
+                 
+                 fluidRow(
+                     DTOutput("tabella3")
+                 )
+             )
+             
+             
+             
+             
+             
+             
+             
+             
+             ), 
+
+
+    tabPanel("Laboratorio Covid-Modena", 
+             fluidPage(
+                 
+                 wellPanel(  
+                     fluidRow(
+                         br(), 
+                         column(6, 
+                                plotlyOutput("serieMO")), 
+                         
+                         column(6, 
+                                fluidRow (  
+                                    valueBox(value = "tottampMO",
+                                             subtitle = "N.Tamponi processati",
+                                             icon = "flask",
+                                             color = "green"),
+                                    valueBox(value = "medgMO",
+                                             subtitle = "Media giornaliera tamponi processati",
+                                             icon = "flask",
+                                             color = "green")
+                                ),
+                                br(),br(),br(),br(),
+                                fluidRow (  
+                                    valueBox(value = "varMO",
+                                             subtitle = "Identificazione Varianti",
+                                             icon = "dna",
+                                             color = "lightblue"),
+                                    valueBox(value = "seqMO",
+                                             subtitle = "Sequenziamento",
+                                             icon = "dna",
+                                             color = "lightblue")
+                                )
+                         ))),
+                 
+                 fluidRow(
+                     DTOutput("tabella4")
+                 )
+             ))
+ #             ), 
+ #  tabPanel("Laboratorio Covid-BS", 
+ #           
+ #           fluidPage(
+ #               
+ #               wellPanel(  
+ #                   fluidRow(
+ #                       br(), 
+ #                       column(6, 
+ #                              plotlyOutput("serieTBS")), 
+ #                       
+ #                       column(6, 
+ #                              fluidRow (  
+ #                                  valueBox(value = "tottampTBS",
+ #                                           subtitle = "N.Tamponi processati",
+ #                                           icon = "flask",
+ #                                           color = "green"),
+ #                                  valueBox(value = "medgTBS",
+ #                                           subtitle = "Media giornaliera tamponi processati",
+ #                                           icon = "flask",
+ #                                           color = "green")
+ #                              ),
+ #                              br(),br(),br(),br(),
+ #                              fluidRow (  
+ #                                  valueBox(value = "varTBS",
+ #                                           subtitle = "Identificazione Varianti",
+ #                                           icon = "dna",
+ #                                           color = "lightblue"),
+ #                                  valueBox(value = "seqTBS",
+ #                                           subtitle = "Sequenziamento",
+ #                                           icon = "dna",
+ #                                           color = "lightblue")
+ #                              )
+ #                       ))),
+ #               
+ #               fluidRow(
+ #                   DTOutput("tabella5")
+ #               )
+ #           )
+ #           
+ # )
+    # 
+    # 
+    # 
+    # 
+    # tabPanel("Analisi del Rischio ed Epidemiologia Genomica")
+    #  
     
      
     )     

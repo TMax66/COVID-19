@@ -87,7 +87,7 @@ valueBox <- function(value, subtitle, icon, color) {
                       icon(icon, "fa-5x")
                   ),
                   div(class = ("col-xs-9 text-right"),
-                      div(style = ("font-size: 15px; font-weight: bold;"),
+                      div(style = ("font-size: 20px; font-weight: bold;"),
                           textOutput(value)
                       ),
                       div(subtitle)
@@ -127,8 +127,8 @@ serie1 <- function(){
     labs(
       y = "Numero Tamponi Naso Faringei", 
       x = "", 
-      title = "Andamento del numero di tamponi naso-faringei processati dai laboratori COVID dell'IZSLER nel 2021", 
-      subtitle = " I punti rappresentano il numero di tamponi giornalieri, la linea blu la media mobile mensile"
+      title = "", 
+      subtitle = ""
     )+
     theme_ipsum_rc(base_size = 10,  axis_title_size = 10, 
                    plot_title_size = 5)+
@@ -160,10 +160,10 @@ serie2 <- function(regione){
     #geom_hline(yintercept = 2729) +
     
     labs(
-      y = "Numero Tamponi Naso Faringei", 
+      y = "Numero Tamponi Naso-Faringei", 
       x = "", 
-      title =  "Andamento del numero di tamponi naso-faringei processati dai laboratori COVID dell'IZSLER nel 2021", 
-      subtitle = " I punti rappresentano il numero di tamponi giornalieri, la linea blu la media mobile mensile"
+      title =  "", 
+      subtitle = ""
     )+
     theme_ipsum_rc(base_size = 10,  axis_title_size = 10, 
                    plot_title_size = 5)+
@@ -192,10 +192,10 @@ serie3 <- function(reparto){
                   y = esami), alpha = 1/5)+
     
     labs(
-      y = "Numero Tamponi Naso Faringei", 
+      y = "Numero Tamponi Naso-Faringei", 
       x = "", 
-      title = "Andamento del numero di tamponi naso-faringei processati", 
-      subtitle = " I punti rappresentano il numero di tamponi giornalieri, la linea blu la media mobile mensile"
+      title = "", 
+      subtitle = ""
     )+
     theme_ipsum_rc(base_size = 10,  axis_title_size = 10, 
                    plot_title_size = 5)+
