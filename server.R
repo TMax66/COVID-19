@@ -2,8 +2,6 @@ server<-function(input, output) {
   
 # Situazione Generale----
 
-  
-  
 output$agg <- renderUI({
  paste0("Dati aggiornati al:", format(as.Date(substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11)), "%d-%m-%Y"))
 })
