@@ -18,8 +18,8 @@ library(hrbrthemes)
 library(plotly)
 
 # conn <- DBI::dbConnect(odbc::odbc(), Driver = "SQL Server", Server = "dbprod02.izsler.it",Database = "IZSLER", Port = 1433)
-# 
-# 
+# #
+# #
 # queryCovid <- ("SELECT
 #   dbo.Conferimenti.Numero AS nconf,
 #   dbo.Anag_TipoConf.Descrizione AS tipoconf,
@@ -32,6 +32,7 @@ library(plotly)
 #   dbo.Anag_Prove.Descrizione AS Prova,
 #   dbo.Anag_Referenti.Codice AS codiceconf,
 #   dbo.Conferimenti.Data AS dtacc,
+#   convert (SMALLDATETIME, dbo.Conferimenti.Data_Primo_RDP_Completo_Firmato) As dtref,
 #   dbo.Anag_Reparti.Descrizione AS Reparto,
 #   dbo.Esami_Aggregati.Tot_Eseguiti
 # FROM
@@ -64,10 +65,11 @@ library(plotly)
 # 
 # ")
 # 
+# 
 # covid <- conn%>% tbl(sql(queryCovid)) %>% as_tibble()
 # 
 # covid[,"Comune"] <- sapply(covid[, "Comune"], iconv, from = "latin1", to = "UTF-8", sub = "")
-
+# # 
 # saveRDS(covid, here("data", "processed",  "covid.rds"))
 
 # Dati

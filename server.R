@@ -1,28 +1,52 @@
 server<-function(input, output) {
   
 # Situazione Generale----
+
   
+  
+output$agg <- renderUI({
+ paste0("Dati aggiornati al:", substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11))
+})
+
+output$aggBS <- renderUI({
+  paste0("Dati aggiornati al:", substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11))
+})
+
+output$aggPV <- renderUI({
+  paste0("Dati aggiornati al:", substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11))
+})
+
+output$aggMO <- renderUI({
+  paste0("Dati aggiornati al:", substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11))
+})
+
+
 ## Tabella----
-  output$tabella <- renderDataTable({   
+  output$tabella <- renderDataTable( 
+    server = FALSE,
+    class = 'cell-border stripe', rownames=FALSE,
+    extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                          searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                          buttons = c('excel')),
     
     if(input$Regione == "Dati Complessivi") {
     
-    datatable((covid %>% 
-                filter(tipoconf == "Gratuito" & anno == 2021)))
+      covid %>% 
+                filter(tipoconf == "Gratuito" & anno == 2021)
     } else
     
     if(input$Regione == "Lombardia"){
-      datatable((covid %>% 
-                   filter(tipoconf == "Gratuito" & anno == 2021 & Regione == "Lombardia")))
+    covid %>% 
+                   filter(tipoconf == "Gratuito" & anno == 2021 & Regione == "Lombardia")
       
     } else
     
       if(input$Regione == "Emilia Romagna"){
-        datatable((covid %>% 
-                     filter(tipoconf == "Gratuito" & anno == 2021 & Regione == "Emilia Romagna")))
+     covid %>% 
+                     filter(tipoconf == "Gratuito" & anno == 2021 & Regione == "Emilia Romagna")
       }
     
-  })
+  )
   
 ## Plot----
   output$serie <- renderPlotly({  
@@ -209,12 +233,18 @@ output$seqt<- renderText({
 
 ## Laboratorio Brescia----
 ### Tabella----
-output$tabella2 <- renderDataTable({   
+output$tabella2 <- renderDataTable(
+server = FALSE,
+class = 'cell-border stripe', rownames=FALSE,
+extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                      searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                      buttons = c('excel')),
+
   
-    datatable((covid %>% 
-                 filter(tipoconf == "Gratuito" & anno == 2021 & Reparto == "Reparto Tecnologie Biologiche Applicate")))
+  covid %>% 
+                 filter(tipoconf == "Gratuito" & anno == 2021 & Reparto == "Reparto Tecnologie Biologiche Applicate")
   
-})
+)
 
 
 
@@ -283,12 +313,15 @@ seqbs$seq
 ##Laboratorio PV----
 
 ### Tabella----
-output$tabella3 <- renderDataTable({   
+output$tabella3 <- renderDataTable(  server = FALSE,
+                                     class = 'cell-border stripe', rownames=FALSE,
+                                     extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                                                           searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                                                           buttons = c('excel')),
+               covid %>% 
+               filter(tipoconf == "Gratuito" & anno == 2021 & Reparto == "Sede Territoriale di Pavia")
   
-  datatable((covid %>% 
-               filter(tipoconf == "Gratuito" & anno == 2021 & Reparto == "Sede Territoriale di Pavia")))
-  
-})
+)
 
 
 
@@ -356,12 +389,18 @@ output$seqPV<- renderText({
 
 ##Laboratorio MO----
 
-output$tabella4 <- renderDataTable({   
+### Tabella----
+output$tabella4 <- renderDataTable( 
+  server = FALSE,
+  class = 'cell-border stripe', rownames=FALSE,
+  extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
+                                        searching = FALSE,paging = TRUE,autoWidth = TRUE,
+                                        buttons = c('excel')),
   
-  datatable((covid %>% 
-               filter(tipoconf == "Gratuito" & anno == 2021 & Reparto == "Sede Territoriale di Modena")))
+  covid %>% 
+               filter(tipoconf == "Gratuito" & anno == 2021 & Reparto == "Sede Territoriale di Modena")
   
-})
+)
 
 
 

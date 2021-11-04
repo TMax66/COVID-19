@@ -4,11 +4,12 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
     tabPanel("Situazione generale",
               
                 fluidPage(
-                    
+                    h1("situazione complessiva"), 
+                    h3(uiOutput("agg")), 
                   wellPanel(  
                     fluidRow(
                         br(), 
-                     
+                 
                           column(2, 
                                  selectInput("Regione", "Regione sede prelievo", 
                                          choices =  c("Dati Complessivi", "Lombardia", "Emilia Romagna"))), 
@@ -50,7 +51,8 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
 # LABORATORIO BRESCIA----
     tabPanel("Laboratorio Covid-Reparto Tecnologie Biologiche Applicate", 
              fluidPage(
-               
+               h1("Laboratorio Covid-Reparto Tecnologie Biologiche Applicate"), 
+               h3(uiOutput("aggBS")),
                wellPanel(  
                  fluidRow(
                    br(), 
@@ -90,7 +92,8 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
 #LABORATORIO PAVIA----
     tabPanel("Laboratorio Covid-Pavia",
              fluidPage(
-                 
+                 h1("Laboratorio Covid-Pavia"), 
+                 h3(uiOutput("aggPV")),
                  wellPanel(  
                      fluidRow(
                          br(), 
@@ -135,10 +138,11 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
              
              ), 
 
-
+#LABORATORIO MODENA----
     tabPanel("Laboratorio Covid-Modena", 
              fluidPage(
-                 
+                 h1("Laboratorio Covid-Modena"), 
+                 h3(uiOutput("aggMO")),
                  wellPanel(  
                      fluidRow(
                          br(), 
