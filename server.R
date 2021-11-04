@@ -5,19 +5,19 @@ server<-function(input, output) {
   
   
 output$agg <- renderUI({
- paste0("Dati aggiornati al:", substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11))
+ paste0("Dati aggiornati al:", format(as.Date(substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11)), "%d-%m-%Y"))
 })
 
 output$aggBS <- renderUI({
-  paste0("Dati aggiornati al:", substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11))
+  paste0("Dati aggiornati al:", format(as.Date(substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11)), "%d-%m-%Y"))
 })
 
 output$aggPV <- renderUI({
-  paste0("Dati aggiornati al:", substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11))
+  paste0("Dati aggiornati al:", format(as.Date(substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11)), "%d-%m-%Y"))
 })
 
 output$aggMO <- renderUI({
-  paste0("Dati aggiornati al:", substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11))
+  paste0("Dati aggiornati al:", format(as.Date(substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11)), "%d-%m-%Y"))
 })
 
 
