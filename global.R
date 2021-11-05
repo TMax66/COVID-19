@@ -17,6 +17,10 @@ library(zoo)
 library(hrbrthemes)
 library(plotly)
 
+
+
+ 
+
 # conn <- DBI::dbConnect(odbc::odbc(), Driver = "SQL Server", Server = "dbprod02.izsler.it",Database = "IZSLER", Port = 1433)
 # #
 # #

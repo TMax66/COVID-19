@@ -176,57 +176,35 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                  fluidRow(
                      DTOutput("tabella4")
                  )
-             ))
- #             ), 
- #  tabPanel("Laboratorio Covid-BS", 
- #           
- #           fluidPage(
- #               
- #               wellPanel(  
- #                   fluidRow(
- #                       br(), 
- #                       column(6, 
- #                              plotlyOutput("serieTBS")), 
- #                       
- #                       column(6, 
- #                              fluidRow (  
- #                                  valueBox(value = "tottampTBS",
- #                                           subtitle = "N.Tamponi processati",
- #                                           icon = "flask",
- #                                           color = "green"),
- #                                  valueBox(value = "medgTBS",
- #                                           subtitle = "Media giornaliera tamponi processati",
- #                                           icon = "flask",
- #                                           color = "green")
- #                              ),
- #                              br(),br(),br(),br(),
- #                              fluidRow (  
- #                                  valueBox(value = "varTBS",
- #                                           subtitle = "Identificazione Varianti",
- #                                           icon = "dna",
- #                                           color = "lightblue"),
- #                                  valueBox(value = "seqTBS",
- #                                           subtitle = "Sequenziamento",
- #                                           icon = "dna",
- #                                           color = "lightblue")
- #                              )
- #                       ))),
- #               
- #               fluidRow(
- #                   DTOutput("tabella5")
- #               )
- #           )
- #           
- # )
-    # 
-    # 
-    # 
-    # 
-    # tabPanel("Analisi del Rischio ed Epidemiologia Genomica")
-    #  
+             )), 
+ #TABELLA PIVOT----
+ tabPanel("Tools",
     
+          
+          
+fluidPage(
+    
+    wellPanel(
+        fluidRow( 
+            column(2, 
+            dateRangeInput("datarange", "Seleziona il periodo:", 
+                           start = "2020-03-01",
+                           end = "2023-12-31", 
+                           format = "dd/mm/yy", 
+                           separator = " - "), 
+            
+            
+            radioButtons(inputId = "format", label = "Enter the format to download", 
+                         choices = c( "csv", "excel"), inline = FALSE, selected = "csv"),
+            downloadButton("download_pivot"),
+            actionButton("copy_pivot", "Copy")), 
+            
+            column(5, offset = 1,
+            rpivotTableOutput("pivot") %>% 
+                 withSpinner(color="blue", type=8)))
      
     )     
-
-             
+)
+)
+)
 

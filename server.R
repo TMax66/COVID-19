@@ -462,78 +462,18 @@ output$seqMO<- renderText({
 })
 
 
-##Laboratorio sede territoriale BS--
+#TABELLA PIVOT
 
-# output$tabella5 <- renderDataTable({   
-#   
-#   datatable((covid %>% 
-#                filter(tipoconf == "Gratuito" & anno == 2021 & Reparto == "Sede Territoriale di Brescia")))
-#   
-# })
-# 
-# 
-# 
-# ### Plot---
-# output$serieTBS<- renderPlotly({  
-#   serie3(reparto = "Sede Territoriale di Brescia")
-# })
-# 
-# ### ValueBox---
-# 
-# 
-# ##### numero---
-# output$tottampMO <- renderText({
-#   
-#   
-#   
-#   tot <-covid %>% 
-#     mutate(anno = year(dtacc)) %>% 
-#     filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & anno == 2021 & Reparto == "Sede Territoriale di Brescia") %>% 
-#     summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) 
-#   
-#   tot$esami
-# })
-# 
-# 
-# 
-# ##### media---
-# output$medgTBS<- renderText({  
-#   media <-  covid %>% 
-#     mutate(anno = year(dtacc)) %>% 
-#     filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & anno == 2021& Reparto == "Sede Territoriale di Brescia") %>% 
-#     group_by(dtacc) %>% 
-#     summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
-#     summarise(media = round(mean(esami), 1))
-#   media$media
-# })
-# 
-# ##### varianti---
-# 
-# output$varTBS<- renderText({
-#   varTBS <- covid %>% 
-#     mutate(anno = year(dtacc)) %>% 
-#     filter(Prova %in% c( "SARS-CoV-2: identificazione varianti", 
-#                          "SARS-CoV-2: identificazione varianti N501Y") & anno == 2021 & Reparto == "Sede Territoriale di Brescia") %>% 
-#     summarise(var = sum(Tot_Eseguiti, na.rm = TRUE))
-#   varTBS$var
-# })
-# 
-# 
-# ##### sequenziamento---
-# 
-# 
-# output$seqTBS<- renderText({
-#   seqTBS <- covid %>% 
-#     mutate(anno = year(dtacc)) %>% 
-#     filter(Prova %in% c( "Sequenziamento acidi nucleici", 
-#                          "Sequenziamento genomico SARS-CoV-2 - Illumina - Miseq",
-#                          "Sequenziamento genomico SARS-CoV-2 - Illumina - Nextseq") & anno == 2021& Reparto == "Sede Territoriale di Brescia") %>% 
-#     summarise(seq = sum(Tot_Eseguiti, na.rm = TRUE))
-#   seqTBS$seq
-# })
-
-
-
+output$pivot <- renderRpivotTable({
+  rpivotTable(covid %>% 
+                filter(), 
+               #select( ),
+              aggregatorName="Sum", vals = "Tot_Eseguiti",
+               onRefresh = htmlwidgets::JS(
+                 "function(config) {
+                        Shiny.onInputChange('pivot', document.getElementById('pivot').innerHTML); 
+                        }"))
+})
 
 
 
