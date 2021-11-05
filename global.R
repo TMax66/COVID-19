@@ -4,26 +4,26 @@ library(readxl)
 library(lubridate)
 library(shinythemes)
 library(DT)
-library(readr)
+#library(readr)
 library(here)
 library(DBI)
 library(odbc)
 library(rpivotTable)
 library(shinyjs)
 library(shinycssloaders)
-library(openxlsx)
+#library(openxlsx)
 library(janitor)
 library(zoo)
 library(hrbrthemes)
 library(plotly)
-
+library(writexl)
 
 
  
-
+# 
 # conn <- DBI::dbConnect(odbc::odbc(), Driver = "SQL Server", Server = "dbprod02.izsler.it",Database = "IZSLER", Port = 1433)
-# #
-# #
+# # #
+# # #
 # queryCovid <- ("SELECT
 #   dbo.Conferimenti.Numero AS nconf,
 #   dbo.Anag_TipoConf.Descrizione AS tipoconf,
@@ -73,7 +73,7 @@ library(plotly)
 # covid <- conn%>% tbl(sql(queryCovid)) %>% as_tibble()
 # 
 # covid[,"Comune"] <- sapply(covid[, "Comune"], iconv, from = "latin1", to = "UTF-8", sub = "")
-# # 
+# # # 
 # saveRDS(covid, here("data", "processed",  "covid.rds"))
 
 # Dati

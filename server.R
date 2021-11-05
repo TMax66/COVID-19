@@ -464,21 +464,77 @@ output$seqMO<- renderText({
 
 #TABELLA PIVOT
 
+
+
+
+
+
 output$pivot <- renderRpivotTable({
+  
+  if(input$dt == "Data di Accettazione"){  
+  
+  
+  
   rpivotTable(covid %>% 
-                filter(), 
+                filter(dtacc >= input$datarange[1] & dtacc <= input$datarange[2]), 
                #select( ),
               aggregatorName="Sum", vals = "Tot_Eseguiti",
                onRefresh = htmlwidgets::JS(
                  "function(config) {
-                        Shiny.onInputChange('pivot', document.getElementById('pivot').innerHTML); 
-                        }"))
+                        Shiny.onInputChange('mypivot', document.getElementById('pivot').innerHTML); }"))
+    
+  }else
+    
+    if(input$dt == "Data di Refertazione"){
+      rpivotTable(covid %>% 
+                    filter(dtref >= input$datarange[1] & dtref <= input$datarange[2]), 
+                  #select( ),
+                  aggregatorName="Sum", vals = "Tot_Eseguiti",
+                  onRefresh = htmlwidgets::JS(
+                    "function(config) {
+                        Shiny.onInputChange('pivot', document.getElementById('mypivot').innerHTML); }"))
+    }
+    
+    
 })
+
+
+# pivot_tbl <- eventReactive(input$mypivot, {
+#   tryCatch({
+#     input$mypivot %>%
+#       read_html %>%
+#       html_table(fill = TRUE) %>%
+#       .[[2]]
+#   }, error = function(e) {
+#     return()
+#   })
+# })
+# 
+# observe({
+#   if (is.data.frame(pivot_tbl()) && nrow(pivot_tbl()) > 0) {
+#     shinyjs::enable("download_pivot")
+#   } else {
+#     shinyjs::disable("download_pivot")
+#   }
+# })
+# 
+# output$download_pivot <- downloadHandler(
+#   filename = function() {
+#     "pivot.xlsx"
+#   },
+#   content = function(file) {
+#     writexl::write_xlsx(as.data.frame(pivot_tbl()), path =file)
+#   }
+# )
+
+
 
 
 
 }
-  
+
+
+
   
 
 

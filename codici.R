@@ -70,13 +70,18 @@ covid[,"Comune"] <- sapply(covid[, "Comune"], iconv, from = "latin1", to = "UTF-
 
 
 
+
+
+
+
+
  
-library(writexl)
-covid %>% 
-   mutate(anno = year(dtacc)) %>%
-    filter(Regione == "Lombardia" & anno == 2021) %>%
-    group_by(codiceconf, Conferente, Comune,Prova) %>%
-    summarise("esami" = sum(Tot_Eseguiti, na.rm = T)) %>%
-    pivot_wider(names_from = "Prova", values_from = "esami", values_fill = 0) %>%
-    adorn_totals(where = "row") %>% 
-    write.xlsx('tl.xlsx')
+# library(writexl)
+# covid %>% 
+#    mutate(anno = year(dtacc)) %>%
+#     filter(Regione == "Lombardia" & anno == 2021) %>%
+#     group_by(codiceconf, Conferente, Comune,Prova) %>%
+#     summarise("esami" = sum(Tot_Eseguiti, na.rm = T)) %>%
+#     pivot_wider(names_from = "Prova", values_from = "esami", values_fill = 0) %>%
+#     adorn_totals(where = "row") %>% 
+#     write.xlsx('tl.xlsx')

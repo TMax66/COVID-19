@@ -128,14 +128,6 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                      DTOutput("tabella3")
                  )
              )
-             
-             
-             
-             
-             
-             
-             
-             
              ), 
 
 #LABORATORIO MODENA----
@@ -177,33 +169,30 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                      DTOutput("tabella4")
                  )
              )), 
- #TABELLA PIVOT----
- tabPanel("Tools",
-    
-          
-          
-fluidPage(
-    
-    wellPanel(
-        fluidRow( 
+#TABELLA PIVOT----
+tabPanel("Tools",
+
+ 
+        fluidPage(  
+        #fluidRow( 
             column(2, 
+                   
+            radioButtons("dt", "Seleziona tra:", 
+                         choices = c("Data di Accettazione", "Data di Refertazione"), inline = FALSE),
             dateRangeInput("datarange", "Seleziona il periodo:", 
                            start = "2020-03-01",
                            end = "2023-12-31", 
                            format = "dd/mm/yy", 
-                           separator = " - "), 
-            
-            
-            radioButtons(inputId = "format", label = "Enter the format to download", 
-                         choices = c( "csv", "excel"), inline = FALSE, selected = "csv"),
-            downloadButton("download_pivot"),
-            actionButton("copy_pivot", "Copy")), 
+                           separator = " - ")), 
+            #downloadButton("download_pivot")),
             
             column(5, offset = 1,
             rpivotTableOutput("pivot") %>% 
-                 withSpinner(color="blue", type=8)))
+                 withSpinner(color="blue", type=8))
+            #)
      
-    )     
+  
+    
 )
 )
 )
