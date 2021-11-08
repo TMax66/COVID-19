@@ -72,8 +72,8 @@ covid[,"Comune"] <- sapply(covid[, "Comune"], iconv, from = "latin1", to = "UTF-
 
 cc <- covid %>% 
   filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
-  mutate(tempiref=(interval(dtacc, dtref))/ddays(1)) %>% View()
-  summarise("Tref" = mean(tempiref, na.rm = TRUE))
+  mutate(tempiref=(interval(dtacc, dtref))/ddays(1)) %>% 
+  summarise("Tref" = median(tempiref, na.rm = TRUE))
 
 
 

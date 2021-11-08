@@ -20,7 +20,7 @@ library(writexl)
 
 
  
-# 
+# # 
 # conn <- DBI::dbConnect(odbc::odbc(), Driver = "SQL Server", Server = "dbprod02.izsler.it",Database = "IZSLER", Port = 1433)
 # # #
 # # #
@@ -35,8 +35,9 @@ library(writexl)
 #   dbo.Anag_Materiali.Descrizione AS Materiale,
 #   dbo.Anag_Prove.Descrizione AS Prova,
 #   dbo.Anag_Referenti.Codice AS codiceconf,
-#   dbo.Conferimenti.Data AS dtacc,
-#   convert (SMALLDATETIME, dbo.Conferimenti.Data_Primo_RDP_Completo_Firmato) As dtref,
+#   dbo.Conferimenti.Data AS dtconf,
+#   dbo.Conferimenti.Data_Accettazione AS dtacc,
+#   dbo.RDP_Date_Emissione.Data_RDP AS dtref,
 #   dbo.Anag_Reparti.Descrizione AS Reparto,
 #   dbo.Esami_Aggregati.Tot_Eseguiti
 # FROM
@@ -57,6 +58,7 @@ library(writexl)
 #    LEFT OUTER JOIN dbo.Anag_Materiali ON ( dbo.Anag_Materiali.Codice=dbo.Conferimenti.Codice_Materiale )
 #    INNER JOIN dbo.Conferimenti_Finalita ON ( dbo.Conferimenti.Anno=dbo.Conferimenti_Finalita.Anno and dbo.Conferimenti.Numero=dbo.Conferimenti_Finalita.Numero )
 #    INNER JOIN dbo.Anag_Finalita  dbo_Anag_Finalita_Confer ON ( dbo.Conferimenti_Finalita.Finalita=dbo_Anag_Finalita_Confer.Codice )
+#    LEFT OUTER JOIN dbo.RDP_Date_Emissione ON ( dbo.RDP_Date_Emissione.Anno=dbo.Conferimenti.Anno and dbo.RDP_Date_Emissione.Numero=dbo.Conferimenti.Numero )
 #   }
 # WHERE
 # ( dbo.Laboratori_Reparto.Laboratorio > 1  )
@@ -68,12 +70,12 @@ library(writexl)
 #   )
 # 
 # ")
-# 
-# 
+# # 
+# # 
 # covid <- conn%>% tbl(sql(queryCovid)) %>% as_tibble()
 # 
 # covid[,"Comune"] <- sapply(covid[, "Comune"], iconv, from = "latin1", to = "UTF-8", sub = "")
-# # # 
+# #
 # saveRDS(covid, here("data", "processed",  "covid.rds"))
 
 # Dati
@@ -107,19 +109,28 @@ valueBox <- function(value, subtitle, icon, color) {
   )
 }
 
-
 ## Plot
+
+covidP <- covid %>% 
+  filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
+  group_by(dtacc) %>% 
+  summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%  
+  filter(esami > 0) %>%
+  mutate(sett = rollmean(esami, k = 30, fill = NA) )
+
+
+
 serie1 <- function(){  
-  covid %>% 
-    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
-    #mutate(anno = year(dtacc)) %>% 
-    #filter(anno == 2021) %>% 
-    
-    
-    group_by(dtacc) %>% 
-    summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%  
-    filter(esami > 0) %>%
-    mutate(sett = rollmean(esami, k = 30, fill = NA) )%>%  
+  covidP %>% 
+    # filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
+    # #mutate(anno = year(dtacc)) %>% 
+    # #filter(anno == 2021) %>% 
+    # 
+    # 
+    # group_by(dtacc) %>% 
+    # summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%  
+    # filter(esami > 0) %>%
+    # mutate(sett = rollmean(esami, k = 30, fill = NA) )%>%  
     ggplot(aes(
       x = dtacc, 
       y = sett
