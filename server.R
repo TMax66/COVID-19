@@ -112,7 +112,7 @@ output$aggMO <- renderUI({
         filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") ) %>% 
          group_by(dtacc) %>% 
          summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
-         summarise(media = round(mean(esami),2))
+         summarise(media = round(median(esami),2))
   
      media$media
      
@@ -191,30 +191,27 @@ output$seqt<- renderText({
                            "Sequenziamento genomico SARS-CoV-2 - Illumina - Nextseq") ) %>% 
       summarise(seq = sum(Tot_Eseguiti, na.rm = TRUE))
     seq$seq
-  # } else
-  #   if(input$Regione == "Lombardia"){
-  #     seq <- covid %>% 
-  #       filter(Regione == "Lombardia") %>% 
-  #       mutate(anno = year(dtacc)) %>% 
-  #       filter(Prova %in% c( "Sequenziamento acidi nucleici", 
-  #                            "Sequenziamento genomico SARS-CoV-2 - Illumina - Miseq",
-  #                            "Sequenziamento genomico SARS-CoV-2 - Illumina - Nextseq") & anno == 2021) %>% 
-  #       summarise(seq = sum(Tot_Eseguiti, na.rm = TRUE))
-  #     seq$seq
-  #   } else
-  #     if(input$Regione == "Emilia Romagna"){
-  #       seq <- covid %>% 
-  #         filter(Regione == "Emilia Romagna") %>% 
-  #         mutate(anno = year(dtacc)) %>% 
-  #         filter(Prova %in% c( "Sequenziamento acidi nucleici", 
-  #                              "Sequenziamento genomico SARS-CoV-2 - Illumina - Miseq",
-  #                              "Sequenziamento genomico SARS-CoV-2 - Illumina - Nextseq") & anno == 2021) %>% 
-  #         summarise(seq = sum(Tot_Eseguiti, na.rm = TRUE))
-  #       seq$seq 
-  #     }
+  
+})
+
+###tempi----
+
+output$tref <- renderText({
+  tempi <- covid %>% 
+    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
+    mutate(tempiref=(interval(dtacc, dtref))/ddays(1), 
+           tempiref = factor(tempiref)) %>% 
+    group_by(tempiref) %>% 
+    summarise(n = n()) %>%
+    mutate(freq = round(100*(n / sum(n)), 0), 
+           rank = rank(row_number()), 
+           cums = cumsum(freq)) %>% 
+    filter(rank==2) %>% 
+    select(cums)
+  tempi$cums
 
 })
-     
+
      
      
      
@@ -272,7 +269,7 @@ output$medgBS<- renderText({
       filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & Reparto == "Reparto Tecnologie Biologiche Applicate") %>% 
       group_by(dtacc) %>% 
       summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
-      summarise(media = round(mean(esami), 2))
+      summarise(media = round(median(esami), 2))
     media$media
 })
     
@@ -301,6 +298,24 @@ seqbs <- covid %>%
 seqbs$seq
 })
 
+###tempi----
+
+output$trefbs <- renderText({
+  tempi <- covid %>% 
+    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") 
+           &  Reparto == "Reparto Tecnologie Biologiche Applicate") %>% 
+    mutate(tempiref=(interval(dtacc, dtref))/ddays(1), 
+           tempiref = factor(tempiref)) %>% 
+    group_by(tempiref) %>% 
+    summarise(n = n()) %>%
+    mutate(freq = round(100*(n / sum(n)), 0), 
+           rank = rank(row_number()), 
+           cums = cumsum(freq)) %>% 
+    filter(rank==2) %>% 
+    select(cums)
+  tempi$cums
+  
+})
 
 
 
@@ -349,7 +364,7 @@ output$medgPV<- renderText({
     filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & Reparto == "Sede Territoriale di Pavia") %>% 
     group_by(dtacc) %>% 
     summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
-    summarise(media = round(mean(esami), 1))
+    summarise(media = round(median(esami), 1))
   media$media
 })
 
@@ -378,7 +393,24 @@ output$seqPV<- renderText({
   seqPV$seq
 })
 
+###tempi----
 
+output$trefpv <- renderText({
+  tempi <- covid %>% 
+    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") 
+           &  Reparto == "Sede Territoriale di Pavia") %>% 
+    mutate(tempiref=(interval(dtacc, dtref))/ddays(1), 
+           tempiref = factor(tempiref)) %>% 
+    group_by(tempiref) %>% 
+    summarise(n = n()) %>%
+    mutate(freq = round(100*(n / sum(n)), 0), 
+           rank = rank(row_number()), 
+           cums = cumsum(freq)) %>% 
+    filter(rank==2) %>% 
+    select(cums)
+  tempi$cums
+  
+})
 
 
 ##Laboratorio MO----
@@ -428,7 +460,7 @@ output$medgMO<- renderText({
     filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & Reparto == "Sede Territoriale di Modena") %>% 
     group_by(dtacc) %>% 
     summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
-    summarise(media = round(mean(esami), 1))
+    summarise(media = round(median(esami), 1))
   media$media
 })
 
@@ -457,13 +489,27 @@ output$seqMO<- renderText({
   seqMO$seq
 })
 
+###tempi----
+
+output$trefmo <- renderText({
+  tempi <- covid %>% 
+    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") 
+           &  Reparto == "Sede Territoriale di Modena") %>% 
+    mutate(tempiref=(interval(dtacc, dtref))/ddays(1), 
+           tempiref = factor(tempiref)) %>% 
+    group_by(tempiref) %>% 
+    summarise(n = n()) %>%
+    mutate(freq = round(100*(n / sum(n)), 0), 
+           rank = rank(row_number()), 
+           cums = cumsum(freq)) %>% 
+    filter(rank==2) %>% 
+    select(cums)
+  tempi$cums
+  
+})
+
 
 #TABELLA PIVOT
-
-
-
-
-
 
 output$pivot <- renderRpivotTable({
   

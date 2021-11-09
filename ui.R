@@ -24,9 +24,13 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                                          icon = "flask",
                                          color = "green"), 
                                 valueBox(value = "medg",
-                                           subtitle = "Media giornaliera tamponi processati",
+                                           subtitle = "Mediana giornaliera tamponi processati",
                                            icon = "flask",
-                                           color = "green")
+                                           color = "green"), 
+                                valueBox(value = "tref",
+                                         subtitle = "% campioni refertati entro 1 giorno",
+                                         icon = "",
+                                         color = "green")
                                 ),
                                 br(),br(),br(),br(),
                                 fluidRow (  
@@ -40,7 +44,7 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                                            color = "lightblue")
                                   )
                                 )
-                      
+
                         )
                     ), 
            
@@ -68,9 +72,13 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                                      icon = "flask",
                                      color = "green"),
                              valueBox(value = "medgBS",
-                                      subtitle = "Media giornaliera tamponi processati",
+                                      subtitle = "Mediana giornaliera tamponi processati",
                                        icon = "flask",
-                                      color = "green")
+                                      color = "green"),
+                           valueBox(value = "trefbs",
+                                    subtitle = "% campioni refertati entro 1 giorno",
+                                    icon = "",
+                                    color = "green")
                            ),
                             br(),br(),br(),br(),
                            fluidRow (  
@@ -112,6 +120,10 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                                     valueBox(value = "medgPV",
                                              subtitle = "Media giornaliera tamponi processati",
                                              icon = "flask",
+                                             color = "green"), 
+                                    valueBox(value = "trefpv",
+                                             subtitle = "% campioni refertati entro 1 giorno",
+                                             icon = "",
                                              color = "green")
                                 ),
                                 br(),br(),br(),br(),
@@ -152,8 +164,13 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                                              icon = "flask",
                                              color = "green"),
                                     valueBox(value = "medgMO",
-                                             subtitle = "Media giornaliera tamponi processati",
+                                             subtitle = "Mediana giornaliera tamponi processati",
                                              icon = "flask",
+                                             color = "green"),
+                             
+                                    valueBox(value = "trefmo",
+                                             subtitle = "% campioni refertati entro 1 giorno",
+                                             icon = "",
                                              color = "green")
                                 ),
                                 br(),br(),br(),br(),

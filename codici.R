@@ -69,16 +69,35 @@ covid <- conn%>% tbl(sql(queryCovid)) %>% as_tibble()
 covid[,"Comune"] <- sapply(covid[, "Comune"], iconv, from = "latin1", to = "UTF-8", sub = "")
 
 
+ 
 
-cc <- covid %>% 
+tempi <- covid %>% 
   filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
-  mutate(tempiref=(interval(dtacc, dtref))/ddays(1)) %>% 
-  summarise("Tref" = median(tempiref, na.rm = TRUE))
-
-
+  mutate(tempiref=(interval(dtacc, dtref))/ddays(1), 
+         tempiref = factor(tempiref)) %>% 
+  group_by(tempiref) %>% 
+  summarise(n = n()) %>%
+  mutate(freq = round(100*(n / sum(n)), 0), 
+         rank = rank(row_number()), 
+         cums = cumsum(freq)) %>% 
+  filter(rank==2) %>% 
+  select(cums)
+  
+  
+  filter(rank <=10) %>% 
+ ggplot(
+   aes(x = freq, y = reorder(tempiref, desc(tempiref)), label = freq)
+ )+  
+  geom_col(fill="royalblue") +
+  labs( y = "Tempi di refertazione in giorni", x = "% di conferimenti refertati")+
+  theme_bw()+
+  geom_text()
 
 
  
+
+ 
+cc
 # library(writexl)
 # covid %>% 
 #    mutate(anno = year(dtacc)) %>%

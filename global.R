@@ -16,7 +16,7 @@ library(janitor)
 library(zoo)
 library(hrbrthemes)
 library(plotly)
-library(writexl)
+#library(writexl)
 
 
  
@@ -70,8 +70,8 @@ library(writexl)
 #   )
 # 
 # ")
-# # 
-# # 
+# #
+# #
 # covid <- conn%>% tbl(sql(queryCovid)) %>% as_tibble()
 # 
 # covid[,"Comune"] <- sapply(covid[, "Comune"], iconv, from = "latin1", to = "UTF-8", sub = "")
