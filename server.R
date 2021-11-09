@@ -18,34 +18,33 @@ output$aggMO <- renderUI({
   paste0("Dati aggiornati al:", format(as.Date(substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11)), "%d-%m-%Y"))
 })
 
+ 
+
+ 
+  
+ 
 
 ## Tabella----
-  output$tabella <- renderDataTable( 
-    server = FALSE,
+  output$tabella <-  renderDataTable( 
+    server = TRUE,
     class = 'cell-border stripe', rownames=FALSE,
-    extensions = 'Buttons', filter = 'top', options = list(dom="Brtip", pageLength = 10,
-                                          searching = TRUE,paging = TRUE,autoWidth = TRUE,
-                                          buttons = c('excel')),
-    
-    # if(input$Regione == "Dati Complessivi") {
-    
+    options = list(dom="Brtip", pageLength = 10,
+                                          searching = TRUE,paging = TRUE,autoWidth = TRUE),
     covid 
-    #%>% 
-                # filter(tipoconf == "Gratuito" & anno == 2021)
-    # } else
-    # 
-    # if(input$Regione == "Lombardia"){
-    # covid %>% 
-    #                filter(tipoconf == "Gratuito" & anno == 2021 & Regione == "Lombardia")
-    #   
-    # } else
-    # 
-    #   if(input$Regione == "Emilia Romagna"){
-    #  covid %>% 
-    #                  filter(tipoconf == "Gratuito" & anno == 2021 & Regione == "Emilia Romagna")
-    #   }
-    
+     
   )
+
+ 
+
+output$downloadData <- downloadHandler(
+  filename = function() {
+    paste("data-", Sys.Date(), ".csv", sep="")
+  },
+  content = function(file) {
+    write.csv(covid, file)
+  }
+)
+
   
 ## Plot----
   output$serie <- renderPlotly({  
@@ -225,19 +224,26 @@ output$tref <- renderText({
 ## Laboratorio Brescia----
 ### Tabella----
 output$tabella2 <- renderDataTable(
-server = FALSE,
-class = 'cell-border stripe', rownames=FALSE,
-extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
-                                      searching = FALSE,paging = TRUE,autoWidth = TRUE,
-                                      buttons = c('excel')),
+  server = TRUE,
+  class = 'cell-border stripe', rownames=FALSE,
+  options = list(dom="Brtip", pageLength = 10,
+                 searching = TRUE,paging = TRUE,autoWidth = TRUE),
 
   
   covid %>% 
-                 filter(tipoconf == "Gratuito" & Reparto == "Reparto Tecnologie Biologiche Applicate")
+                 filter(Reparto == "Reparto Tecnologie Biologiche Applicate")
   
 )
 
-
+output$downloadDatabs <- downloadHandler(
+  filename = function() {
+    paste("data-", Sys.Date(), ".csv", sep="")
+  },
+  content = function(file) {
+    write.csv((covid%>% 
+                filter(Reparto == "Reparto Tecnologie Biologiche Applicate")), file)
+  }
+)
 
 ### Plot----
 output$serieBS<- renderPlotly({  
@@ -322,17 +328,24 @@ output$trefbs <- renderText({
 ##Laboratorio PV----
 
 ### Tabella----
-output$tabella3 <- renderDataTable(  server = FALSE,
-                                     class = 'cell-border stripe', rownames=FALSE,
-                                     extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
-                                                                           searching = FALSE,paging = TRUE,autoWidth = TRUE,
-                                                                           buttons = c('excel')),
+output$tabella3 <- renderDataTable(      server = TRUE,
+                                         class = 'cell-border stripe', rownames=FALSE,
+                                         options = list(dom="Brtip", pageLength = 10,
+                                                        searching = TRUE,paging = TRUE,autoWidth = TRUE),
                covid %>% 
-               filter(tipoconf == "Gratuito" & Reparto == "Sede Territoriale di Pavia")
+               filter(Reparto == "Sede Territoriale di Pavia")
   
 )
 
-
+output$downloadDataPV  <- downloadHandler(
+  filename = function() {
+    paste("data-", Sys.Date(), ".csv", sep="")
+  },
+  content = function(file) {
+    write.csv((covid %>% 
+                 filter(Reparto == "Sede Territoriale di Pavia")), file)
+  }
+)
 
 ### Plot----
 output$seriePV<- renderPlotly({  
@@ -417,18 +430,25 @@ output$trefpv <- renderText({
 
 ### Tabella----
 output$tabella4 <- renderDataTable( 
-  server = FALSE,
+  server = TRUE,
   class = 'cell-border stripe', rownames=FALSE,
-  extensions = 'Buttons',options = list(dom="Brtip", pageLength = 10,
-                                        searching = FALSE,paging = TRUE,autoWidth = TRUE,
-                                        buttons = c('excel')),
+  options = list(dom="Brtip", pageLength = 10,
+                 searching = TRUE,paging = TRUE,autoWidth = TRUE),
   
   covid %>% 
-               filter(tipoconf == "Gratuito" & Reparto == "Sede Territoriale di Modena")
+   filter(Reparto == "Sede Territoriale di Modena")
   
 )
 
-
+output$downloadDatamo  <- downloadHandler(
+  filename = function() {
+    paste("data-", Sys.Date(), ".csv", sep="")
+  },
+  content = function(file) {
+    write.csv((  covid %>% 
+                   filter(Reparto == "Sede Territoriale di Modena")), file)
+  }
+)
 
 ### Plot----
 output$serieMO<- renderPlotly({  
@@ -509,7 +529,7 @@ output$trefmo <- renderText({
 })
 
 
-#TABELLA PIVOT
+#TABELLA PIVOT----
 
 output$pivot <- renderRpivotTable({
   

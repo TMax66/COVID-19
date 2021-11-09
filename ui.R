@@ -49,6 +49,8 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                     ), 
            
                   fluidRow(
+                    br(), 
+                    downloadButton("downloadData", "Scarica i dati"),
                     DTOutput("tabella")
                   )
                 )
@@ -94,6 +96,8 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                    ))),
                
                fluidRow(
+                 br(), 
+                 downloadButton("downloadDatabs", "Scarica i dati"),
                  DTOutput("tabella2")
                )
              )
@@ -140,6 +144,8 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                          ))),
                  
                  fluidRow(
+                   br(), 
+                   downloadButton("downloadDatapv", "Scarica i dati"),
                      DTOutput("tabella3")
                  )
              )
@@ -187,6 +193,8 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                          ))),
                  
                  fluidRow(
+                   br(), 
+                   downloadButton("downloadDatamo", "Scarica i dati"),
                      DTOutput("tabella4")
                  )
              )), 
