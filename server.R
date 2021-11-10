@@ -111,7 +111,7 @@ output$downloadData <- downloadHandler(
         filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") ) %>% 
          group_by(dtacc) %>% 
          summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
-         summarise(media = round(median(esami),2))
+         summarise(media = round(mean(esami),2))
   
      media$media
      
@@ -275,7 +275,7 @@ output$medgBS<- renderText({
       filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & Reparto == "Reparto Tecnologie Biologiche Applicate") %>% 
       group_by(dtacc) %>% 
       summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
-      summarise(media = round(median(esami), 2))
+      summarise(media = round(mean(esami), 2))
     media$media
 })
     
@@ -377,7 +377,7 @@ output$medgPV<- renderText({
     filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & Reparto == "Sede Territoriale di Pavia") %>% 
     group_by(dtacc) %>% 
     summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
-    summarise(media = round(median(esami), 1))
+    summarise(media = round(mean(esami), 1))
   media$media
 })
 
@@ -480,7 +480,7 @@ output$medgMO<- renderText({
     filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & Reparto == "Sede Territoriale di Modena") %>% 
     group_by(dtacc) %>% 
     summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
-    summarise(media = round(median(esami), 1))
+    summarise(media = round(mean(esami), 1))
   media$media
 })
 
