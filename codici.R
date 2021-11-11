@@ -17,9 +17,6 @@ library(zoo)
 library(hrbrthemes)
 
 conn <- DBI::dbConnect(odbc::odbc(), Driver = "SQL Server", Server = "dbprod02.izsler.it",Database = "IZSLER", Port = 1433)
-
-
-
 queryCovid <- ("SELECT
   dbo.Conferimenti.Numero AS nconf,
   dbo.Anag_TipoConf.Descrizione AS tipoconf,
@@ -31,7 +28,9 @@ queryCovid <- ("SELECT
   dbo.Anag_Materiali.Descrizione AS Materiale,
   dbo.Anag_Prove.Descrizione AS Prova,
   dbo.Anag_Referenti.Codice AS codiceconf,
-  dbo.Conferimenti.Data AS dtacc,
+  dbo.Conferimenti.Data AS dtconf,
+  dbo.Conferimenti.Data_Accettazione AS dtacc,
+  dbo.RDP_Date_Emissione.Data_RDP AS dtref,
   dbo.Anag_Reparti.Descrizione AS Reparto,
   dbo.Esami_Aggregati.Tot_Eseguiti
 FROM
@@ -52,21 +51,60 @@ FROM
    LEFT OUTER JOIN dbo.Anag_Materiali ON ( dbo.Anag_Materiali.Codice=dbo.Conferimenti.Codice_Materiale )
    INNER JOIN dbo.Conferimenti_Finalita ON ( dbo.Conferimenti.Anno=dbo.Conferimenti_Finalita.Anno and dbo.Conferimenti.Numero=dbo.Conferimenti_Finalita.Numero )
    INNER JOIN dbo.Anag_Finalita  dbo_Anag_Finalita_Confer ON ( dbo.Conferimenti_Finalita.Finalita=dbo_Anag_Finalita_Confer.Codice )
+   LEFT OUTER JOIN dbo.RDP_Date_Emissione ON ( dbo.RDP_Date_Emissione.Anno=dbo.Conferimenti.Anno and dbo.RDP_Date_Emissione.Numero=dbo.Conferimenti.Numero )
   }
 WHERE
 ( dbo.Laboratori_Reparto.Laboratorio > 1  )
   AND  dbo.Esami_Aggregati.Esame_Altro_Ente = 0
   AND  dbo.Esami_Aggregati.Esame_Altro_Ente = 0
   AND  (
-  dbo_Anag_Finalita_Confer.Descrizione  =  'Emergenza COVID-19'
-  AND  dbo.Anag_Prove.Descrizione  NOT IN  ('Motivazione di inidoneità campione', 'Motivi di mancata esecuzione di prove richieste', 'Motivi di riemissione del Rapporto di Prova', 'Note alle prove', 'Note alle prove di sequenziamento genomico', 'Opinioni ed interpretazioni -non oggetto dell''accredit. ACCREDIA')
+  dbo_Anag_Finalita_Confer.Descrizione  IN  ('Emergenza COVID-19', 'Varianti SARS-CoV2')
+  AND  dbo.Anag_Prove.Descrizione  NOT IN  ('Motivazione di inidoneità campione', 'Motivi di mancata esecuzione di prove richieste', 'Motivi di riemissione del Rapporto di Prova', 'Note alle prove', 'Opinioni ed interpretazioni -non oggetto dell''accredit. ACCREDIA')
   )
 
+
 ")
+
+ 
+
+ 
 
 covid <- conn%>% tbl(sql(queryCovid)) %>% as_tibble()
 
 covid[,"Comune"] <- sapply(covid[, "Comune"], iconv, from = "latin1", to = "UTF-8", sub = "")
+
+
+
+covid %>% 
+  filter(Prova ==  )
+
+
+
+
+
+
+
+
+
+covid %>%
+  filter(Reparto== "Analisi del rischio ed epidemiologia genomica" & anno == 2021) %>%
+  
+  group_by(dtacc) %>%
+  summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%
+  filter(esami > 0) %>%
+  mutate(sett = rollmean(esami, k = 30, fill = NA) )%>%
+  ggplot(aes(
+    x = dtacc,
+    y = sett
+  ))+
+  geom_line(col = "blue", size = 1.5)+
+  geom_point(aes(x = dtacc,
+                 y = esami), alpha = 1/5)+
+  geom_line(aes(x = dtacc,
+                y = esami), alpha = 1/5)
+
+
+
 
 
  

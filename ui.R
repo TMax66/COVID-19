@@ -198,6 +198,34 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                      DTOutput("tabella4")
                  )
              )), 
+#AREG----
+tabPanel("Analisi del Rischio ed Epidemiologia Genomica", 
+         
+         h1("Analisi del Rischio ed Epidemiologia Genomica"), 
+         h3(uiOutput("aggAREG")),
+         wellPanel(  
+           fluidRow(
+             br(), 
+             column(6, 
+                    plotlyOutput("serieAREG")%>% 
+                      withSpinner(color="blue", type=8)), 
+             column(6, 
+                    valueBox(value = "seqAREG",
+                             subtitle = "Sequenziamento",
+                             icon = "dna",
+                             color = "lightblue"))
+             ), 
+
+         fluidRow(
+           br(), 
+           downloadButton("downloadDataAREG", "Scarica i dati"),
+           DTOutput("tabellaAREG")
+         )
+         
+         
+         )), 
+
+
 #TABELLA PIVOT----
 tabPanel("Tools",
 

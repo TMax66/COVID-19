@@ -1,6 +1,6 @@
 server<-function(input, output) {
   
-# Situazione Generale----
+
 
 output$agg <- renderUI({
  paste0("Dati aggiornati al:", format(as.Date(substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11)), "%d-%m-%Y"))
@@ -18,12 +18,14 @@ output$aggMO <- renderUI({
   paste0("Dati aggiornati al:", format(as.Date(substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11)), "%d-%m-%Y"))
 })
 
- 
+output$aggAREG <- renderUI({
+  paste0("Dati aggiornati al:", format(as.Date(substr(max(covid$dtref, na.rm = TRUE), start = 1, stop = 11)), "%d-%m-%Y"))
+})
 
  
   
  
-
+# Situazione Generale----
 ## Tabella----
   output$tabella <-  renderDataTable( 
     server = TRUE,
@@ -72,33 +74,6 @@ output$downloadData <- downloadHandler(
                summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) 
    
     tot$esami
-    
-    # } else 
-    #   
-    #   if(input$Regione == "Lombardia") { 
-    #     
-    #     tot <-covid %>% 
-    #       filter(Regione == "Lombardia") %>% 
-    #       mutate(anno = year(dtacc)) %>% 
-    #       filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & anno == 2021) %>% 
-    #       summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) 
-    #     
-    #     tot$esami
-    #     
-    #     } else
-    #       
-    #     if(input$Regione == "Emilia Romagna") {
-    #       
-    #       tot <-covid %>% 
-    #         filter(Regione == "Emilia Romagna") %>% 
-    #       mutate(anno = year(dtacc)) %>% 
-    #         filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & anno == 2021) %>% 
-    #         summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) 
-    #       
-    #       tot$esami
-    #       
-    #     }
-    # 
   })
 
 ### media ----
@@ -115,31 +90,7 @@ output$downloadData <- downloadHandler(
   
      media$media
      
-     # } else
-     #   
-     #   if(input$Regione == "Lombardia") {
-     #     
-     #     media <-  covid %>% 
-     #       filter(Regione == "Lombardia") %>% 
-     #       mutate(anno = year(dtacc)) %>% 
-     #       filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & anno == 2021) %>% 
-     #       group_by(dtacc) %>% 
-     #       summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
-     #       summarise(media = mean(esami))
-     #     media$media
-     #   } else
-     #     
-     #  if(input$Regione == "Emilia Romagna") { 
-     #    
-     #    media <-  covid %>% 
-     #      filter(Regione == "Emilia Romagna") %>% 
-     #      mutate(anno = year(dtacc)) %>% 
-     #    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & anno == 2021) %>% 
-     #      group_by(dtacc) %>% 
-     #      summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
-     #      summarise(media = mean(esami))
-     #    media$media
-     #    }
+     
    })
   
 ###varianti----
@@ -153,29 +104,7 @@ output$downloadData <- downloadHandler(
          summarise(var = sum(Tot_Eseguiti, na.rm = TRUE))
        var$var
        
-      #    } else
-      #      
-      # if(input$Regione == "Lombardia") {
-      #   var <- covid %>% 
-      #     filter(Regione == "Lombardia") %>% 
-      #     mutate(anno = year(dtacc)) %>% 
-      #     filter(Prova %in% c( "SARS-CoV-2: identificazione varianti", 
-      #                          "SARS-CoV-2: identificazione varianti N501Y") ) %>% 
-      #     summarise(var = sum(Tot_Eseguiti, na.rm = TRUE))
-      #   var$var
-      # } else
-      #   
-      #   if(input$Regione == "Emilia Romagna") {
-      #     
-      #     var <- covid %>% 
-      #       filter(Regione == "Emilia Romagna") %>% 
-      #       mutate(anno = year(dtacc)) %>% 
-      #       filter(Prova %in% c( "SARS-CoV-2: identificazione varianti", 
-      #                            "SARS-CoV-2: identificazione varianti N501Y") ) %>% 
-      #       summarise(var = sum(Tot_Eseguiti, na.rm = TRUE))
-      #     var$var
-      #   }
-     
+       
    })
      
 ###sequenziamento----
@@ -528,6 +457,49 @@ output$trefmo <- renderText({
   
 })
 
+
+
+
+#AREG----
+## Tabella----
+output$tabellaAREG <-  renderDataTable( 
+  server = TRUE,
+  class = 'cell-border stripe', rownames=FALSE,
+  options = list(dom="Brtip", pageLength = 10,
+                 searching = TRUE,paging = TRUE,autoWidth = TRUE),
+  covid %>% 
+    filter(Finalità == "Varianti SARS-CoV2")
+  
+)
+
+
+
+output$downloadDataAREG <- downloadHandler(
+  filename = function() {
+    paste("data-", Sys.Date(), ".csv", sep="")
+  },
+  content = function(file) {
+    vroom::vroom_write(covid, file)
+  }
+)
+
+## Plot----
+
+output$serieAREG<- renderPlotly({  
+  serie4(reparto = "Analisi del rischio ed epidemiologia genomica")
+})
+
+## Sequenziamento----
+
+output$seqAREG<- renderText({
+  seqAREG <- covid %>% 
+    mutate(anno = year(dtacc)) %>% 
+    filter(Prova %in% c( "Sequenziamento acidi nucleici", 
+                         "Sequenziamento genomico SARS-CoV-2 - Illumina - Miseq",
+                         "Sequenziamento genomico SARS-CoV-2 - Illumina - Nextseq") & Reparto == "Analisi del rischio ed epidemiologia genomica") %>% 
+    summarise(seq = sum(Tot_Eseguiti, na.rm = TRUE))
+  seqAREG$seq
+})
 
 #TABELLA PIVOT----
 

@@ -49,11 +49,19 @@ WHERE
   AND  dbo.Esami_Aggregati.Esame_Altro_Ente = 0
   AND  dbo.Esami_Aggregati.Esame_Altro_Ente = 0
   AND  (
-  dbo_Anag_Finalita_Confer.Descrizione  =  'Emergenza COVID-19'
-  AND  dbo.Anag_Prove.Descrizione  NOT IN  ('Motivazione di inidoneità campione', 'Motivi di mancata esecuzione di prove richieste', 'Motivi di riemissione del Rapporto di Prova', 'Note alle prove', 'Note alle prove di sequenziamento genomico', 'Opinioni ed interpretazioni -non oggetto dell''accredit. ACCREDIA')
+  dbo_Anag_Finalita_Confer.Descrizione  IN  ('Emergenza COVID-19', 'Varianti SARS-CoV2')
+  AND  dbo.Anag_Prove.Descrizione  NOT IN  ('Motivazione di inidoneità campione', 'Motivi di mancata esecuzione di prove richieste', 'Motivi di riemissione del Rapporto di Prova', 'Note alle prove', 'Opinioni ed interpretazioni -non oggetto dell''accredit. ACCREDIA')
   )
 
+
 ")
+
+
+
+
+
+
+
 #
 #
 covid <- conn%>% tbl(sql(queryCovid)) %>% as_tibble()
