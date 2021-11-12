@@ -139,7 +139,7 @@ serie4 <- function(reparto){
                   y = esami), alpha = 1/5)+
     
     labs(
-      y = "Numero esami di sequenziamento eseguiti",
+      y = "Numero esami",
       x = "",
       title = "",
       subtitle = ""

@@ -501,6 +501,39 @@ output$seqAREG<- renderText({
   seqAREG$seq
 })
 
+## tempi di refertazione----
+
+output$trefareg <- renderText({
+  tempi <- covid %>% 
+      filter(Prova %in% c( "Sequenziamento acidi nucleici",
+                           "Sequenziamento genomico SARS-CoV-2 - Illumina - Miseq",
+                           "Sequenziamento genomico SARS-CoV-2 - Illumina - Nextseq") & Reparto == "Analisi del rischio ed epidemiologia genomica") %>%
+      mutate(tempiref=(interval(dtacc, dtref))/ddays(1)) %>% 
+    summarise(mediana = median(tempiref, na.rm = TRUE))
+  tempi$mediana
+})
+ 
+
+
+  # covid %>% 
+  #   filter(Prova %in% c( "Sequenziamento acidi nucleici", 
+  #                        "Sequenziamento genomico SARS-CoV-2 - Illumina - Miseq",
+  #                        "Sequenziamento genomico SARS-CoV-2 - Illumina - Nextseq") & Reparto == "Analisi del rischio ed epidemiologia genomica") %>%
+  #   mutate(tempiref=(interval(dtacc, dtref))/ddays(1)) %>% 
+  # ggplot(
+  #   aes(x = tempiref)
+  # )+
+  # geom_histogram(col = "blue")+
+  # xlim(0, 50)+ 
+  # theme_bw()+
+  # labs(title =  "distribuzione tempi di refertazione", x = "giorni")
+    
+  
+
+
+
+
+ 
 #TABELLA PIVOT----
 
 output$pivot <- renderRpivotTable({

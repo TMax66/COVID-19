@@ -213,7 +213,11 @@ tabPanel("Analisi del Rischio ed Epidemiologia Genomica",
                     valueBox(value = "seqAREG",
                              subtitle = "Sequenziamento",
                              icon = "dna",
-                             color = "lightblue"))
+                             color = "royalblue"), 
+                    valueBox(value = "trefareg", 
+                             subtitle = "Mediana giorni di refertazione", 
+                             icon = "", 
+                             color = "green"))
              ), 
 
          fluidRow(
