@@ -70,7 +70,7 @@ output$downloadData <- downloadHandler(
     
     tot <-covid %>% 
             mutate(anno = year(dtacc)) %>% 
-             filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
+             filter(Prova %in% c("SARS-CoV-2: agente eziologico")) %>% 
                summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) 
    
     tot$esami
@@ -83,7 +83,7 @@ output$downloadData <- downloadHandler(
      
     media <-  covid %>% 
        mutate(anno = year(dtacc)) %>% 
-        filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") ) %>% 
+        filter(Prova %in% c("SARS-CoV-2: agente eziologico") ) %>% 
          group_by(dtacc) %>% 
          summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
          summarise(media = round(mean(esami),2))
@@ -126,7 +126,7 @@ output$seqt<- renderText({
 
 output$tref <- renderText({
   tempi <- covid %>% 
-    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
+    filter(Prova %in% c("SARS-CoV-2: agente eziologico")) %>% 
     mutate(tempiref=(interval(dtacc, dtref))/ddays(1), 
            tempiref = factor(tempiref)) %>% 
     group_by(tempiref) %>% 
@@ -189,7 +189,7 @@ output$tottampBS <- renderText({
     
     tot <-covid %>% 
       mutate(anno = year(dtacc)) %>% 
-      filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")  & Reparto == "Reparto Tecnologie Biologiche Applicate") %>% 
+      filter(Prova %in% c("SARS-CoV-2: agente eziologico")  & Reparto == "Reparto Tecnologie Biologiche Applicate") %>% 
       summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) 
     
     tot$esami
@@ -201,7 +201,7 @@ output$tottampBS <- renderText({
 output$medgBS<- renderText({  
     media <-  covid %>% 
       mutate(anno = year(dtacc)) %>% 
-      filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & Reparto == "Reparto Tecnologie Biologiche Applicate") %>% 
+      filter(Prova %in% c("SARS-CoV-2: agente eziologico") & Reparto == "Reparto Tecnologie Biologiche Applicate") %>% 
       group_by(dtacc) %>% 
       summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
       summarise(media = round(mean(esami), 2))
@@ -237,7 +237,7 @@ seqbs$seq
 
 output$trefbs <- renderText({
   tempi <- covid %>% 
-    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") 
+    filter(Prova %in% c("SARS-CoV-2: agente eziologico") 
            &  Reparto == "Reparto Tecnologie Biologiche Applicate") %>% 
     mutate(tempiref=(interval(dtacc, dtref))/ddays(1), 
            tempiref = factor(tempiref)) %>% 
@@ -291,7 +291,7 @@ output$tottampPV <- renderText({
   
   tot <-covid %>% 
     mutate(anno = year(dtacc)) %>% 
-    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")  & Reparto == "Sede Territoriale di Pavia") %>% 
+    filter(Prova %in% c( "SARS-CoV-2: agente eziologico")  & Reparto == "Sede Territoriale di Pavia") %>% 
     summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) 
   
   tot$esami
@@ -303,7 +303,7 @@ output$tottampPV <- renderText({
 output$medgPV<- renderText({  
   media <-  covid %>% 
     mutate(anno = year(dtacc)) %>% 
-    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & Reparto == "Sede Territoriale di Pavia") %>% 
+    filter(Prova %in% c(  "SARS-CoV-2: agente eziologico") & Reparto == "Sede Territoriale di Pavia") %>% 
     group_by(dtacc) %>% 
     summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
     summarise(media = round(mean(esami), 1))
@@ -339,7 +339,7 @@ output$seqPV<- renderText({
 
 output$trefpv <- renderText({
   tempi <- covid %>% 
-    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") 
+    filter(Prova %in% c(  "SARS-CoV-2: agente eziologico") 
            &  Reparto == "Sede Territoriale di Pavia") %>% 
     mutate(tempiref=(interval(dtacc, dtref))/ddays(1), 
            tempiref = factor(tempiref)) %>% 
@@ -394,7 +394,7 @@ output$tottampMO <- renderText({
   
   tot <-covid %>% 
     mutate(anno = year(dtacc)) %>% 
-    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")  & Reparto == "Sede Territoriale di Modena") %>% 
+    filter(Prova %in% c(  "SARS-CoV-2: agente eziologico")  & Reparto == "Sede Territoriale di Modena") %>% 
     summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) 
   
   tot$esami
@@ -406,7 +406,7 @@ output$tottampMO <- renderText({
 output$medgMO<- renderText({  
   media <-  covid %>% 
     mutate(anno = year(dtacc)) %>% 
-    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") & Reparto == "Sede Territoriale di Modena") %>% 
+    filter(Prova %in% c(  "SARS-CoV-2: agente eziologico") & Reparto == "Sede Territoriale di Modena") %>% 
     group_by(dtacc) %>% 
     summarise(esami = sum(Tot_Eseguiti, na.rm = TRUE)) %>% 
     summarise(media = round(mean(esami), 1))
@@ -442,7 +442,7 @@ output$seqMO<- renderText({
 
 output$trefmo <- renderText({
   tempi <- covid %>% 
-    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico") 
+    filter(Prova %in% c(  "SARS-CoV-2: agente eziologico") 
            &  Reparto == "Sede Territoriale di Modena") %>% 
     mutate(tempiref=(interval(dtacc, dtref))/ddays(1), 
            tempiref = factor(tempiref)) %>% 

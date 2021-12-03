@@ -4,13 +4,10 @@ library(readxl)
 library(lubridate)
 library(shinythemes)
 library(DT)
- 
 library(here)
- 
 library(rpivotTable)
 library(shinyjs)
 library(shinycssloaders)
- 
 library(janitor)
 library(zoo)
 library(hrbrthemes)
@@ -24,8 +21,10 @@ library(plotly)
 
 # Dati
 covid <- readRDS(here("data", "processed", "covid.rds"))
+ 
 covid <- 
   covid %>% 
+  rename(Finalità = FinalitÃ) %>% 
   mutate(anno = year(dtacc))
 
 # Funzioni
@@ -56,7 +55,7 @@ valueBox <- function(value, subtitle, icon, color) {
 ## Plot
 
 covidP <- covid %>% 
-  filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>% 
+  filter(Prova %in% c("SARS-CoV-2: agente eziologico")) %>% 
   group_by(dtacc) %>% 
   summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%  
   filter(esami > 0) %>%
@@ -91,7 +90,7 @@ serie1 <- function(){
 
 serie3 <- function(reparto){
   covid %>%
-    filter(Prova %in% c("Agente eziologico", "SARS-CoV-2: agente eziologico")) %>%
+    filter(Prova %in% c("SARS-CoV-2: agente eziologico")) %>%
     filter(Reparto== reparto) %>%
     #filter(anno == 2021) %>%
     group_by(dtacc) %>%
