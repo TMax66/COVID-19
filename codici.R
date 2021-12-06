@@ -23,9 +23,24 @@ FROM [DarwinSqlSE].[dbo].[Prg_Estrazione_Covid19]"
 
 
 
-covid <- conn%>% tbl(sql(query)) %>% as_tibble()
+#covid <- conn%>% tbl(sql(query)) %>% as_tibble()
 
-saveRDS(covid, "COVID.RDS")
+#saveRDS(covid, "COVID.RDS")
+
+camp <- readRDS("COVID.RDS")
+
+covid <- readRDS(here("data", "processed", "covid.rds"))
+
+
+covid$ID <- paste0(covid$anno, "/", covid$nconf)
+camp$ID <- paste0(camp$Anno, "/", camp$Numero)
+
+covid <- covid %>% 
+  select( -Tot_Eseguiti)
+
+
+covid %>% 
+  left_join(camp, by="ID") %>% View()
 
 
 library(readxl)
