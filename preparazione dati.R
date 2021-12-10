@@ -23,7 +23,8 @@ queryCovid <- ("SELECT
   dbo.Conferimenti.Data_Accettazione AS dtacc,
   dbo.RDP_Date_Emissione.Data_RDP AS dtref,
   dbo.Anag_Reparti.Descrizione AS Reparto,
-  dbo.Esami_Aggregati.Tot_Eseguiti
+  dbo.Esami_Aggregati.Tot_Eseguiti, 
+   dbo_Anag_Referenti_DestFatt.Ragione_Sociale
 FROM
 { oj dbo.Anag_TipoConf INNER JOIN dbo.Conferimenti ON ( dbo.Anag_TipoConf.Codice=dbo.Conferimenti.Tipo )
    INNER JOIN dbo.Anag_Comuni ON ( dbo.Anag_Comuni.Codice=dbo.Conferimenti.Luogo_Prelievo )
@@ -39,6 +40,7 @@ FROM
    LEFT OUTER JOIN dbo.Laboratori_Reparto ON ( dbo.Esami_Aggregati.RepLab_analisi=dbo.Laboratori_Reparto.Chiave )
    LEFT OUTER JOIN dbo.Anag_Reparti ON ( dbo.Laboratori_Reparto.Reparto=dbo.Anag_Reparti.Codice )
    LEFT OUTER JOIN dbo.Anag_Laboratori ON ( dbo.Laboratori_Reparto.Laboratorio=dbo.Anag_Laboratori.Codice )
+   LEFT OUTER JOIN dbo.Anag_Referenti  dbo_Anag_Referenti_DestFatt ON ( dbo.Conferimenti.Dest_Fattura=dbo_Anag_Referenti_DestFatt.Codice )
    LEFT OUTER JOIN dbo.Anag_Materiali ON ( dbo.Anag_Materiali.Codice=dbo.Conferimenti.Codice_Materiale )
    INNER JOIN dbo.Conferimenti_Finalita ON ( dbo.Conferimenti.Anno=dbo.Conferimenti_Finalita.Anno and dbo.Conferimenti.Numero=dbo.Conferimenti_Finalita.Numero )
    INNER JOIN dbo.Anag_Finalita  dbo_Anag_Finalita_Confer ON ( dbo.Conferimenti_Finalita.Finalita=dbo_Anag_Finalita_Confer.Codice )
@@ -52,6 +54,15 @@ WHERE
   dbo_Anag_Finalita_Confer.Descrizione  IN  ('Emergenza COVID-19', 'Varianti SARS-CoV2')
   AND  dbo.Anag_Prove.Descrizione  NOT IN  ('Motivazione di inidoneità campione', 'Motivi di mancata esecuzione di prove richieste', 'Motivi di riemissione del Rapporto di Prova', 'Note alle prove', 'Opinioni ed interpretazioni -non oggetto dell''accredit. ACCREDIA')
   )
+
+  
+  
+  
+  
+  
+  
+  
+
 
 
 ")
@@ -72,3 +83,4 @@ covid <- covid %>%
   mutate(anno = year(dtacc))
 #
 saveRDS(covid, here("data", "processed",  "covid.rds"))
+

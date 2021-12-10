@@ -24,7 +24,8 @@ covid <- readRDS(here("data", "processed", "covid.rds"))
  
 covid <- 
   covid %>% 
-  rename(Finalità = FinalitÃ) %>% 
+  rename(Finalità = FinalitÃ) %>%
+  rename("Destinatario Fattura" = Ragione_Sociale) %>% 
   mutate(anno = year(dtacc))
 
 # Funzioni
