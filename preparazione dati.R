@@ -5,6 +5,8 @@ library(odbc)
 library(lubridate)
 
 
+#conn <- DBI::dbConnect(odbc::odbc(), Driver = "ODBC Driver 17 for SQL Server", Server = "dbprod02.izsler.it",Database = "IZSLER", Port = 1433, uid="user_cogep", pwd="!d44grki654hjS")
+
 conn <- DBI::dbConnect(odbc::odbc(), Driver = "SQL Server", Server = "dbprod02.izsler.it",Database = "IZSLER", Port = 1433)
 # #
 # #
@@ -54,17 +56,6 @@ WHERE
   dbo_Anag_Finalita_Confer.Descrizione  IN  ('Emergenza COVID-19', 'Varianti SARS-CoV2')
   AND  dbo.Anag_Prove.Descrizione  NOT IN  ('Motivazione di inidoneità campione', 'Motivi di mancata esecuzione di prove richieste', 'Motivi di riemissione del Rapporto di Prova', 'Note alle prove', 'Opinioni ed interpretazioni -non oggetto dell''accredit. ACCREDIA')
   )
-
-  
-  
-  
-  
-  
-  
-  
-
-
-
 ")
 
 
