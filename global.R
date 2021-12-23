@@ -12,10 +12,7 @@ library(janitor)
 library(zoo)
 library(hrbrthemes)
 library(plotly)
- 
 
-
- 
 # # 
 
 
@@ -24,7 +21,7 @@ covid <- readRDS(here("data", "processed", "covid.rds"))
  
 covid <- 
   covid %>% 
-  #rename(Finalità = FinalitÃ) %>%
+  rename(Finalità = FinalitÃ) %>%
   rename("Destinatario Fattura" = Ragione_Sociale) %>% 
   mutate(anno = year(dtacc))
 
@@ -123,7 +120,6 @@ serie3 <- function(reparto){
 serie4 <- function(reparto){
   covid %>%
     filter(Reparto== reparto & anno == 2021) %>%
-     
     group_by(dtacc) %>%
     summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%
     filter(esami > 0) %>%

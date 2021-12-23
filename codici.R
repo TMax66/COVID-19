@@ -1,3 +1,65 @@
+covid <- covid %>% 
+  mutate(anno = year(dtref))
+ 
+  covid %>%
+    filter(Reparto==  "Analisi del rischio ed epidemiologia genomica" & anno == 2021) %>%
+    group_by(dtref) %>%
+    summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%  
+    filter(esami > 0) %>%
+    mutate(sett = rollmean(esami, k = 30, fill = NA) )%>%
+    ggplot(aes(
+      x = dtacc,
+      y = sett
+    ))+
+    geom_line(col = "blue", size = 1.5)+
+    geom_point(aes(x = dtacc,
+                   y = esami), alpha = 1/5)+
+    geom_line(aes(x = dtacc,
+                  y = esami), alpha = 1/5)+
+    
+    labs(
+      y = "Numero esami",
+      x = "",
+      title = "",
+      subtitle = ""
+    )+
+    theme_ipsum_rc(base_size = 10,  axis_title_size = 10,
+                   plot_title_size = 5)+
+    theme(
+      axis.text.x=element_text(size = 10))
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 library(tidyverse)
 library(here)
 library(DBI)
