@@ -4,7 +4,7 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
     tabPanel("Situazione generale",
               
                 fluidPage(
-                    h1("situazione complessiva"), 
+                    h1("Situazione generale"), 
                     h3(uiOutput("agg")), 
                   wellPanel(  
                     fluidRow(
