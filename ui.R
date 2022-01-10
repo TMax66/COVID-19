@@ -199,35 +199,35 @@ ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
                  )
              )), 
 #AREG----
-tabPanel("Analisi del Rischio ed Epidemiologia Genomica",
-
-         h1("Analisi del Rischio ed Epidemiologia Genomica"),
+tabPanel("Analisi del Rischio ed Epidemiologia Genomica", 
+         
+         h1("Analisi del Rischio ed Epidemiologia Genomica"), 
          h3(uiOutput("aggAREG")),
-         wellPanel(
+         wellPanel(  
            fluidRow(
-             br(),
-             column(6,
-                    plotlyOutput("serieAREG")%>%
-                      withSpinner(color="blue", type=8)),
-             column(6,
+             br(), 
+             column(6, 
+                    plotlyOutput("serieAREG")%>% 
+                      withSpinner(color="blue", type=8)), 
+             column(6, 
                     valueBox(value = "seqAREG",
                              subtitle = "Sequenziamento",
                              icon = "dna",
-                             color = "royalblue"),
-                    valueBox(value = "trefareg",
-                             subtitle = "Mediana giorni di refertazione",
-                             icon = "",
+                             color = "royalblue"), 
+                    valueBox(value = "trefareg", 
+                             subtitle = "Mediana giorni di refertazione", 
+                             icon = "", 
                              color = "green"))
-             ),
+             ), 
 
          fluidRow(
-           br(),
+           br(), 
            downloadButton("downloadDataAREG", "Scarica i dati"),
            DTOutput("tabellaAREG")
          )
-
-
-         )),
+         
+         
+         )), 
 
 
 #TABELLA PIVOT----
