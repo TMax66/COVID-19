@@ -54,7 +54,7 @@ valueBox <- function(value, subtitle, icon, color) {
 
 covidP <- covid %>% 
   filter(Prova %in% c("SARS-CoV-2: agente eziologico")) %>% 
-  group_by(dtacc) %>% 
+  group_by(dtref) %>% 
   summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%  
   filter(esami > 0) %>%
   mutate(sett = rollmean(esami, k = 30, fill = NA) )
@@ -64,13 +64,13 @@ covidP <- covid %>%
 serie1 <- function(){  
   covidP %>% 
     ggplot(aes(
-      x = dtacc, 
+      x = dtref, 
       y = sett
     ))+
     geom_line(col = "blue", size = 1.5)+
-    geom_point(aes(x = dtacc, 
+    geom_point(aes(x = dtref, 
                    y = esami), alpha = 1/5)+
-    geom_line(aes(x = dtacc, 
+    geom_line(aes(x = dtref, 
                   y = esami), alpha = 1/5)+
     
     labs(
@@ -91,18 +91,18 @@ serie3 <- function(reparto){
     filter(Prova %in% c("SARS-CoV-2: agente eziologico")) %>%
     filter(Reparto== reparto) %>%
     #filter(anno == 2021) %>%
-    group_by(dtacc) %>%
+    group_by(dtref) %>%
     summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%
     filter(esami > 0) %>%
     mutate(sett = rollmean(esami, k = 30, fill = NA) )%>%
     ggplot(aes(
-      x = dtacc,
+      x = dtref,
       y = sett
     ))+
     geom_line(col = "blue", size = 1.5)+
-    geom_point(aes(x = dtacc,
+    geom_point(aes(x = dtref,
                    y = esami), alpha = 1/5)+
-    geom_line(aes(x = dtacc,
+    geom_line(aes(x = dtref,
                   y = esami), alpha = 1/5)+
 
     labs(
@@ -120,18 +120,23 @@ serie3 <- function(reparto){
 serie4 <- function(reparto){
   covid %>%
     filter(Reparto== reparto & anno == 2021) %>%
+<<<<<<< HEAD
     group_by(dtacc) %>%
+=======
+     
+    group_by(dtref) %>%
+>>>>>>> 07e143f6085147f0f8363f4b8500b2977338faea
     summarise(esami = sum(Tot_Eseguiti, na.rm = T)) %>%
     filter(esami > 0) %>%
     mutate(sett = rollmean(esami, k = 30, fill = NA) )%>%
     ggplot(aes(
-      x = dtacc,
+      x = dtref,
       y = sett
     ))+
     geom_line(col = "blue", size = 1.5)+
-    geom_point(aes(x = dtacc,
+    geom_point(aes(x = dtref,
                    y = esami), alpha = 1/5)+
-    geom_line(aes(x = dtacc,
+    geom_line(aes(x = dtref,
                   y = esami), alpha = 1/5)+
     
     labs(
