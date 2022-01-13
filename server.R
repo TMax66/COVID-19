@@ -32,9 +32,10 @@ output$aggAREG <- renderUI({
     class = 'cell-border stripe', rownames=FALSE,
     options = list(dom="Brtip", pageLength = 10,
                                           searching = TRUE,paging = TRUE,autoWidth = TRUE),
-    covid 
+    covid  
+    )
      
-  )
+
 
  
 
