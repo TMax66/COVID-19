@@ -88,18 +88,6 @@ conferimenti <- unique(factor(bs29$nconf))
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 covid %>%
   filter(Reparto== "Analisi del rischio ed epidemiologia genomica" & anno == 2021) %>%
   
