@@ -1,8 +1,8 @@
 
 library(tidyverse)
 library(here)
-library(DBI)
-library(odbc)
+# library(DBI)
+# library(odbc)
 library(lubridate)
 
 
@@ -18,15 +18,22 @@ tariffe <- tibble(
             "Sequenziamento genomico SARS-CoV-2 - Illumina - Nextseq",
             "Sequenziamento genomico Illumina - Miseq Nextera DNA Flex",
             "Sequenziamento genomico Illumina - Nextseq Illumina DNA Prep"), 
-  tariffa = c(73.38, 19.77, 19.77, 87.66, 35,20,87.66, 201.31,93.82)
+  tariffa = c( 45, 15.97, 19.77, 87.66, 35,20,87.66, 201.31,93.82)
 )
 
-dt %>% filter(anno == 2021) %>% 
+dt %>% filter(anno >=  2021) %>% 
   mutate(mese = month(dtacc)) %>%  
-  group_by(Reparto, mese,  Prova ) %>% 
-  summarise(nesami = sum(Tot_Eseguiti)) %>%
+  group_by(Reparto, anno, mese,  Prova ) %>% 
+  summarise(nesami = sum(Tot_Eseguiti, na.rm = TRUE)) %>%
   left_join(tariffe, by="Prova") %>%  
-  mutate(ricOVID = nesami*tariffa) %>% 
+  mutate(ricOVID = nesami*tariffa,
+         Dipartimento = ifelse(Reparto == "Reparto Tecnologie Biologiche Applicate", "Dipartimento tutela e salute animale",
+                               ifelse(Reparto == "Analisi del rischio ed epidemiologia genomica", "Direzione Sanitaria",
+                                      ifelse(Reparto == "Sede Territoriale di Pavia", "Dipartimento Area Territoriale Lombardia", 
+                                             ifelse(Reparto == "Sede Territoriale di Modena", "Dipartimento Area Territoriale Emilia Romagna", Reparto)))), 
+         Dipartimento = casefold(Dipartimento, upper = TRUE), 
+         Reparto = casefold(Reparto, upper = TRUE) 
+          ) %>%  
   saveRDS("ricavoCovid.RDS")
 
 
