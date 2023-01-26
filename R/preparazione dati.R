@@ -7,21 +7,6 @@ library(lubridate)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #conn <- DBI::dbConnect(odbc::odbc(), Driver = "ODBC Driver 17 for SQL Server", Server = "dbprod02.izsler.it",Database = "IZSLER", Port = 1433, uid="user_cogep", pwd="!d44grki654hjS")
 
 conn <- DBI::dbConnect(odbc::odbc(), Driver = "SQL Server", Server = "dbprod02.izsler.it",Database = "IZSLER", Port = 1433)
