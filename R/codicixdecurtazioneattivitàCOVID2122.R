@@ -33,7 +33,7 @@ dt %>% filter(anno >=  2021) %>%
                                              ifelse(Reparto == "Sede Territoriale di Modena", "Dipartimento Area Territoriale Emilia Romagna", Reparto)))), 
          Dipartimento = casefold(Dipartimento, upper = TRUE), 
          Reparto = casefold(Reparto, upper = TRUE) 
-          ) %>%  
+          ) %>%  View()
   saveRDS("ricavoCovid.RDS")
 
 

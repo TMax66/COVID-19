@@ -149,33 +149,3 @@ serie4 <- function(reparto){
     theme(
       axis.text.x=element_text(size = 10))
 }
-
-
-
-
-
-
-# covidP %>% 
-#   ggplot(aes(
-#     x = dtacc, 
-#     y = sett
-#   ))+
-#   geom_line(col = "blue", size = 1.5)+
-#   geom_point(aes(x = dtacc, 
-#                  y = esami), alpha = 1/5)+
-#   geom_line(aes(x = dtacc, 
-#                 y = esami), alpha = 1/5)+
-#   
-#   labs(
-#     y = "", 
-#     x = "", 
-#     title = "Supporto all'emergenza COVID-19 durante tutte le fasi della pandemia", 
-#     subtitle = "Andamento del numero di tamponi naso-farignei processati giornalmente dai laboratori COVID dell'IZSLER"
-#   )+
-#   theme_classic()+
-#   # theme_ipsum_rc(base_size = 10,  axis_title_size = 15, 
-#   #                plot_title_size = 20)+
-#   theme(
-#     plot.title = element_text(size = rel(2)),
-#     axis.text.x=element_text(size = 15),
-#     axis.text.y=element_text(size = 15))

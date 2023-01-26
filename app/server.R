@@ -127,7 +127,7 @@ output$seqt<- renderText({
 output$tref <- renderText({
   tempi <- covid %>% 
     filter(Prova %in% c("SARS-CoV-2: agente eziologico")) %>% 
-    mutate(tempiref=(interval(dtacc, dtprimoRDP))/ddays(1), 
+    mutate(tempiref=(interval(dtacc, dtref))/ddays(1), 
            tempiref = factor(tempiref)) %>% 
     group_by(tempiref) %>% 
     summarise(n = n()) %>%
@@ -239,7 +239,7 @@ output$trefbs <- renderText({
   tempi <- covid %>% 
     filter(Prova %in% c("SARS-CoV-2: agente eziologico") 
            &  Reparto == "Reparto Tecnologie Biologiche Applicate") %>% 
-    mutate(tempiref=(interval(dtacc, dtprimoRDP))/ddays(1), 
+    mutate(tempiref=(interval(dtacc, dtref))/ddays(1), 
            tempiref = factor(tempiref)) %>% 
     group_by(tempiref) %>% 
     summarise(n = n()) %>%
@@ -341,7 +341,7 @@ output$trefpv <- renderText({
   tempi <- covid %>% 
     filter(Prova %in% c(  "SARS-CoV-2: agente eziologico") 
            &  Reparto == "Sede Territoriale di Pavia") %>% 
-    mutate(tempiref=(interval(dtacc, dtprimoRDP))/ddays(1), 
+    mutate(tempiref=(interval(dtacc, dtref))/ddays(1), 
            tempiref = factor(tempiref)) %>% 
     group_by(tempiref) %>% 
     summarise(n = n()) %>%
@@ -444,7 +444,7 @@ output$trefmo <- renderText({
   tempi <- covid %>% 
     filter(Prova %in% c(  "SARS-CoV-2: agente eziologico") 
            &  Reparto == "Sede Territoriale di Modena") %>% 
-    mutate(tempiref=(interval(dtacc, dtprimoRDP))/ddays(1), 
+    mutate(tempiref=(interval(dtacc, dtref))/ddays(1), 
            tempiref = factor(tempiref)) %>% 
     group_by(tempiref) %>% 
     summarise(n = n()) %>%
@@ -508,7 +508,7 @@ output$trefareg <- renderText({
       filter(Prova %in% c( "Sequenziamento acidi nucleici",
                            "Sequenziamento genomico SARS-CoV-2 - Illumina - Miseq",
                            "Sequenziamento genomico SARS-CoV-2 - Illumina - Nextseq") & Reparto == "Analisi del rischio ed epidemiologia genomica") %>%
-      mutate(tempiref=(interval(dtacc, dtprimoRDP))/ddays(1)) %>% 
+      mutate(tempiref=(interval(dtacc, dtref))/ddays(1)) %>% 
     summarise(mediana = median(tempiref, na.rm = TRUE))
   tempi$mediana
 })

@@ -1,5 +1,5 @@
 ui<-navbarPage("IZSLER: Attività dei laboratori COVID-19",
-    #theme = shinytheme("cerulean"),
+    theme = shinytheme("cerulean"),
 # SITUAZIONE GENERALE----
     tabPanel("Situazione generale",
               
